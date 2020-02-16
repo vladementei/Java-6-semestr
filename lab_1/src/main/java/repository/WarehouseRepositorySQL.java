@@ -11,7 +11,7 @@ import java.util.Locale;
 public class WarehouseRepositorySQL extends SQLDatabase implements WarehouseRepository {
 
     public WarehouseRepositorySQL() throws ClassNotFoundException, SQLException {
-        super("warehouse");
+        super("warehouses");
     }
 
     @Override

@@ -9,7 +9,7 @@ public abstract class SQLDatabase {
     private static final String JDBC_DRIVER = "org.postgresql.Driver";
     private static final String DB_URL = "jdbc:postgresql://localhost:5432/";
     private static final String DB_NAME = "shop_info";
-    protected static String TABLE_NAME = "products";
+    protected String TABLE_NAME = "products";
     private static final String USER = "postgres";
     private static final String PASS = "1111";
 
@@ -17,7 +17,7 @@ public abstract class SQLDatabase {
     protected Statement statement = null;
 
     public SQLDatabase(String tableName) throws ClassNotFoundException, SQLException {
-        SQLDatabase.TABLE_NAME = tableName;
+        this.TABLE_NAME = tableName;
         try {
             Class.forName(JDBC_DRIVER);
             connectDatabase();
