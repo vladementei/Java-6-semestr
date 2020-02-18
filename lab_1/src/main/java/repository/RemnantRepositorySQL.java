@@ -23,10 +23,20 @@ public class RemnantRepositorySQL extends SQLDatabase implements RemnantReposito
                 "(product_id INTEGER NOT NULL , " +
                 " warehouse_id INTEGER NOT NULL, " +
                 " amount INTEGER , " +
+                " UNIQUE (product_id, warehouse_id), " +
                 " foreign key (product_id) references products(id), " +
                 " foreign key (warehouse_id) references warehouses (id))";
         this.statement.executeUpdate(sql);
         System.out.println("Table '" + TABLE_NAME + "' connected successfully");
+    }
+
+    @Override
+    public int getProductAmount(Product product) throws SQLException {
+        String sql = "SELECT SUM (amount) AS answer FROM " + TABLE_NAME + " WHERE product_id=" + product.getId();
+        System.out.println(sql);
+        ResultSet rs = this.statement.executeQuery(sql);
+        rs.next();
+        return rs.getInt("answer");
     }
 
     @Override
