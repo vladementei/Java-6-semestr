@@ -9,7 +9,7 @@ public abstract class SQLDatabase {
     private static final String JDBC_DRIVER = "org.postgresql.Driver";
     private static final String DB_URL = "jdbc:postgresql://localhost:5432/";
     private static final String DB_NAME = "shop_info";
-    protected String TABLE_NAME = "products";
+    protected String TABLE_NAME;
     private static final String USER = "postgres";
     private static final String PASS = "1111";
 
