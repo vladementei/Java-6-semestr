@@ -17,6 +17,7 @@ public class Main {
         System.out.println(productRepository.update(product) + "\n");
         productRepository.delete(2);
         productRepository.getALL().forEach(System.out::println);
+        System.out.println();
 
         WarehouseRepository warehouseRepository = new WarehouseRepositorySQL("warehouses");
         Warehouse warehouse = new Warehouse(1, "Main warehouse", "Nezavisimosti 4");
@@ -28,7 +29,11 @@ public class Main {
         System.out.println(warehouseRepository.update(warehouse) + "\n");
         warehouseRepository.delete(2);
         warehouseRepository.getALL().forEach(System.out::println);
+        System.out.println();
 
+
+        product = new Product(1, "pencil", "grey and long");
+        warehouse = new Warehouse(1, "Main warehouse", "Nezavisimosti 4");
         RemnantRepository remnantRepository = new RemnantRepositorySQL("product_warehouse");
         Remnant remnant = new Remnant(1, 1, 5);
         System.out.println(remnantRepository.save(remnant) + "\n");
@@ -36,8 +41,8 @@ public class Main {
         System.out.println(remnantRepository.save(remnant) + "\n");
         remnant.setAmount(10);
         System.out.println(remnantRepository.update(remnant) + "\n");
-        System.out.println(remnantRepository.getAllByWarehouse(warehouse));
-        System.out.println(remnantRepository.getAllByProduct(product));
-        System.out.println(remnantRepository.getProductAmount(product));
+        System.out.println(remnantRepository.getAllByWarehouse(warehouse) + "\n");
+        System.out.println(remnantRepository.getAllByProduct(product) + "\n");
+        System.out.println(remnantRepository.getProductAmount(product) + "\n");
     }
 }
