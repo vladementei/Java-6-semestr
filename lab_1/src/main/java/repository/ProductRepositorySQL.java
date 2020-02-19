@@ -22,9 +22,9 @@ public class ProductRepositorySQL extends SQLDatabase implements ProductReposito
         System.out.println("Connecting table " + TABLE_NAME);
         String sql = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME +
                 "(" + ID + " SERIAL, " +
-                      NAME + " VARCHAR(255), " +
-                      DESCRIPTION + " VARCHAR(255), " +
-                 "PRIMARY KEY (" + ID + "))";
+                NAME + " VARCHAR(255), " +
+                DESCRIPTION + " VARCHAR(255), " +
+                "PRIMARY KEY (" + ID + "))";
         this.statement.executeUpdate(sql);
         System.out.println("Table '" + TABLE_NAME + "' connected successfully");
     }
@@ -32,10 +32,10 @@ public class ProductRepositorySQL extends SQLDatabase implements ProductReposito
     @Override
     public Product get(int id) throws SQLException {
         Product product = null;
-        String sql = "SELECT * FROM " + TABLE_NAME + " WHERE " + ID +"=" + id;
+        String sql = "SELECT * FROM " + TABLE_NAME + " WHERE " + ID + "=" + id;
         System.out.println(sql);
-        try (ResultSet resultSet = this.statement.executeQuery(sql)){
-            if(resultSet.next()) {
+        try (ResultSet resultSet = this.statement.executeQuery(sql)) {
+            if (resultSet.next()) {
                 product = new Product(resultSet.getInt(ID), resultSet.getString(NAME), resultSet.getString(DESCRIPTION));
             }
         }
@@ -43,11 +43,11 @@ public class ProductRepositorySQL extends SQLDatabase implements ProductReposito
     }
 
     @Override
-    public List<Product> getALL() throws SQLException{
+    public List<Product> getALL() throws SQLException {
         List<Product> products = new ArrayList<>();
         String sql = "SELECT * FROM " + TABLE_NAME;
         System.out.println(sql);
-        try (ResultSet resultSet = this.statement.executeQuery(sql)){
+        try (ResultSet resultSet = this.statement.executeQuery(sql)) {
             while (resultSet.next()) {
                 products.add(new Product(resultSet.getInt(ID), resultSet.getString(NAME), resultSet.getString(DESCRIPTION)));
             }
@@ -56,11 +56,11 @@ public class ProductRepositorySQL extends SQLDatabase implements ProductReposito
     }
 
     @Override
-    public Product save(Product product) throws SQLException {
+    public Product insert(Product product) throws SQLException {
         String sql = String.format(Locale.US, "INSERT INTO " + TABLE_NAME + " (" + NAME + ", " + DESCRIPTION +
                         ") VALUES ('%s', '%s') RETURNING id",
-                        product.getName(),
-                        product.getDescription());
+                product.getName(),
+                product.getDescription());
         System.out.println(sql);
         ResultSet resultSet = this.statement.executeQuery(sql);
         resultSet.next();

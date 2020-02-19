@@ -18,7 +18,7 @@ public abstract class SQLDatabase {
 
     public SQLDatabase(String tableName) throws ClassNotFoundException, SQLException {
         this.TABLE_NAME = tableName;
-        if(connection == null) {
+        if (connection == null) {
             try {
                 Class.forName(JDBC_DRIVER);
                 connectDatabase();
@@ -38,10 +38,9 @@ public abstract class SQLDatabase {
         connectTable();
     }
 
-    private void connectDatabase() throws SQLException{
+    private void connectDatabase() throws SQLException {
         System.out.println("Connecting to database " + DB_NAME);
         connection = DriverManager.getConnection(DB_URL + DB_NAME, USER, PASS);
-        //this.statement = connection.createStatement();
     }
 
     public abstract void connectTable() throws SQLException;

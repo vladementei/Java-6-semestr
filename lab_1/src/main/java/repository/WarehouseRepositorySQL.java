@@ -23,8 +23,8 @@ public class WarehouseRepositorySQL extends SQLDatabase implements WarehouseRepo
         System.out.println("Connecting table " + TABLE_NAME);
         String sql = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME +
                 "(" + ID + " SERIAL, " +
-                      TITLE + " VARCHAR(255), " +
-                      LOCATION + " VARCHAR(255), " +
+                TITLE + " VARCHAR(255), " +
+                LOCATION + " VARCHAR(255), " +
                 "PRIMARY KEY (" + ID + "))";
         this.statement.executeUpdate(sql);
         System.out.println("Table '" + TABLE_NAME + "' connected successfully");
@@ -35,8 +35,8 @@ public class WarehouseRepositorySQL extends SQLDatabase implements WarehouseRepo
         Warehouse warehouse = null;
         String sql = "SELECT * FROM " + TABLE_NAME + " WHERE " + ID + " = " + id;
         System.out.println(sql);
-        try (ResultSet resultSet = this.statement.executeQuery(sql)){
-            if(resultSet.next()) {
+        try (ResultSet resultSet = this.statement.executeQuery(sql)) {
+            if (resultSet.next()) {
                 warehouse = new Warehouse(resultSet.getInt(ID), resultSet.getString(TITLE), resultSet.getString(LOCATION));
             }
         }
@@ -48,7 +48,7 @@ public class WarehouseRepositorySQL extends SQLDatabase implements WarehouseRepo
         List<Warehouse> products = new ArrayList<>();
         String sql = "SELECT * FROM " + TABLE_NAME;
         System.out.println(sql);
-        try (ResultSet resultSet = this.statement.executeQuery(sql)){
+        try (ResultSet resultSet = this.statement.executeQuery(sql)) {
             while (resultSet.next()) {
                 products.add(new Warehouse(resultSet.getInt(ID), resultSet.getString(TITLE), resultSet.getString(LOCATION)));
             }
@@ -57,7 +57,7 @@ public class WarehouseRepositorySQL extends SQLDatabase implements WarehouseRepo
     }
 
     @Override
-    public Warehouse save(Warehouse warehouse) throws SQLException {
+    public Warehouse insert(Warehouse warehouse) throws SQLException {
         String sql = String.format(Locale.US, "INSERT INTO " + TABLE_NAME + " (" + TITLE + ", " + LOCATION + ") VALUES ('%s', '%s') RETURNING " + ID,
                 warehouse.getTitle(), warehouse.getLocation());
         System.out.println(sql);
@@ -70,7 +70,7 @@ public class WarehouseRepositorySQL extends SQLDatabase implements WarehouseRepo
     @Override
     public Warehouse update(Warehouse warehouse) throws SQLException {
         String sql = String.format(Locale.US, "UPDATE " + TABLE_NAME + " SET " + TITLE + " = '%s', " + LOCATION + " = '%s' " +
-                        "WHERE " + ID + "= '%d'", warehouse.getTitle(), warehouse.getLocation(), warehouse.getId());
+                "WHERE " + ID + "= '%d'", warehouse.getTitle(), warehouse.getLocation(), warehouse.getId());
         System.out.println(sql);
         this.statement.executeUpdate(sql);
         //warehouse = get(product.getId())
@@ -79,7 +79,7 @@ public class WarehouseRepositorySQL extends SQLDatabase implements WarehouseRepo
 
     @Override
     public void delete(int id) throws SQLException {
-        String sql = "DELETE FROM " + TABLE_NAME + " WHERE " + ID +" = " + id;
+        String sql = "DELETE FROM " + TABLE_NAME + " WHERE " + ID + " = " + id;
         System.out.println(sql);
         this.statement.execute(sql);
     }

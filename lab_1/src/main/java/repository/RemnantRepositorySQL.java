@@ -25,8 +25,8 @@ public class RemnantRepositorySQL extends SQLDatabase implements RemnantReposito
         System.out.println("Connecting table " + TABLE_NAME);
         String sql = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME +
                 "(" + PRODUCT_ID + " INTEGER NOT NULL, " +
-                      WAREHOUSE_ID + " INTEGER NOT NULL, " +
-                      AMOUNT + " INTEGER , " +
+                WAREHOUSE_ID + " INTEGER NOT NULL, " +
+                AMOUNT + " INTEGER , " +
                 " UNIQUE (" + PRODUCT_ID + ", " + WAREHOUSE_ID + "), " +
                 " foreign key (" + PRODUCT_ID + ") references products(id), " +
                 " foreign key (" + WAREHOUSE_ID + ") references warehouses (id))";
@@ -71,9 +71,9 @@ public class RemnantRepositorySQL extends SQLDatabase implements RemnantReposito
     }
 
     @Override
-    public Remnant save(Remnant remnant) throws SQLException {
+    public Remnant insert(Remnant remnant) throws SQLException {
         String sql = String.format(Locale.US, "INSERT INTO " + TABLE_NAME + " (" + PRODUCT_ID + ", " + WAREHOUSE_ID + " , " + AMOUNT +
-                        ") VALUES ('%d', '%d', '%d')", remnant.getProductId(), remnant.getWarehouseId(), remnant.getAmount());
+                ") VALUES ('%d', '%d', '%d')", remnant.getProductId(), remnant.getWarehouseId(), remnant.getAmount());
         System.out.println(sql);
         this.statement.executeUpdate(sql);
         return remnant;
@@ -82,7 +82,7 @@ public class RemnantRepositorySQL extends SQLDatabase implements RemnantReposito
     @Override
     public Remnant update(Remnant remnant) throws SQLException {
         String sql = String.format(Locale.US, "UPDATE " + TABLE_NAME + " SET " + AMOUNT + " = '%d' WHERE " + PRODUCT_ID + "=" + remnant.getProductId() +
-                        " AND " + WAREHOUSE_ID + "=" + remnant.getWarehouseId(), remnant.getAmount());
+                " AND " + WAREHOUSE_ID + "=" + remnant.getWarehouseId(), remnant.getAmount());
         System.out.println(sql);
         this.statement.executeUpdate(sql);
         return remnant;

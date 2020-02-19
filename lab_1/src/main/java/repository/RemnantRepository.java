@@ -14,7 +14,7 @@ public interface RemnantRepository {
 
     List<Remnant> getAllByWarehouse(Warehouse warehouse) throws SQLException;
 
-    Remnant save(Remnant remnant) throws SQLException;
+    Remnant insert(Remnant remnant) throws SQLException;
 
     Remnant update(Remnant remnant) throws SQLException;
 

@@ -10,7 +10,7 @@ public interface WarehouseRepository {
 
     List<Warehouse> getALL() throws SQLException;
 
-    Warehouse save(Warehouse warehouse) throws SQLException;
+    Warehouse insert(Warehouse warehouse) throws SQLException;
 
     Warehouse update(Warehouse warehouse) throws SQLException;
 

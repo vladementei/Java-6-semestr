@@ -10,7 +10,7 @@ public interface ProductRepository {
 
     List<Product> getALL() throws SQLException;
 
-    Product save(Product product) throws SQLException;
+    Product insert(Product product) throws SQLException;
 
     Product update(Product product) throws SQLException;
 
