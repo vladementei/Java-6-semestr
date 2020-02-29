@@ -47,42 +47,58 @@ public class Controller implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         listViewProducts.setItems(productsObservableList);
-        listViewProducts.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         listViewProducts.setOnKeyPressed(event -> {
-//            if(event.getCode() == KeyCode.DELETE){
-//                List<GroupInfo> toDelete  = listView.getSelectionModel().getSelectedItems().stream().sorted((o1, o2) -> {
-//                    if(o2 instanceof Student){
-//                            return 1;
-//                    }
-//                    return -1;
-//                }).collect(Collectors.toList());
-//
-//                for(GroupInfo elem: toDelete){
-//                    if(elem instanceof Student){
-//                        studentObservableList.remove(elem);
-//                    }else {
-//                       studentObservableList.setAll(studentObservableList.stream()
-//                                                    .filter(s -> s.getGroup() != elem.getGroup())
-//                                                    .collect(Collectors.toList()));
-//                    }
-//                }
-//                countAllGroupsMarks();
-//            }
+            if(event.getCode() == KeyCode.DELETE){
+                Product toDelete = listViewProducts.getSelectionModel().getSelectedItem();
+                if(toDelete != null) {
+                    System.out.println("DELETE: " + toDelete);
+                }
+            }
+        });
+        listViewProducts.setOnMouseClicked(event -> {
+            if(event.getClickCount() == 2){
+                Product toDelete = listViewProducts.getSelectionModel().getSelectedItem();
+                if(toDelete != null) {
+                    System.out.println("OPEN: " + toDelete);
+                }
+            }
         });
         listViewWarehouses.setItems(warehousesObservableList);
-        listViewWarehouses.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-        listViewWarehouses.setOnKeyPressed(event -> {});
+        listViewWarehouses.setOnKeyPressed(event -> {
+            if(event.getCode() == KeyCode.DELETE){
+                Warehouse toDelete = listViewWarehouses.getSelectionModel().getSelectedItem();
+                if(toDelete != null) {
+                    System.out.println("DELETE: " + toDelete);
+                }
+            }
+        });
+        listViewWarehouses.setOnMouseClicked(event -> {
+            if(event.getClickCount() == 2){
+                Warehouse toDelete = listViewWarehouses.getSelectionModel().getSelectedItem();
+                if(toDelete != null) {
+                    System.out.println("OPEN: " + toDelete);
+                }
+            }
+        });
     }
 
 
-
-    public void openFile(ActionEvent event){
-
+    public void addProduct(ActionEvent event){
+        System.out.println("CREATE Product");
     }
 
-    public void saveFile(ActionEvent event){
-
+    public void addWarehouse(ActionEvent event){
+        System.out.println("Create Warehouse");
     }
+
+    public void addRemnant(ActionEvent event){
+        Product product = listViewProducts.getSelectionModel().getSelectedItem();
+        Warehouse warehouse = listViewWarehouses.getSelectionModel().getSelectedItem();
+        if (product != null && warehouse != null){
+            System.out.println("Create Remnant" + product + " " + warehouse);
+        }
+    }
+
 
     public void addStudent(ActionEvent event){
 //        AddStudentDialog dialog = new AddStudentDialog();
@@ -105,16 +121,6 @@ public class Controller implements Initializable {
 //        }
 //    }
 
-    public void analyze(ActionEvent event){
-//        List<Map.Entry<Integer, List<GroupInfo>>> list = studentObservableList.stream()
-//                .collect(Collectors.groupingBy(GroupInfo::getGroup))
-//                .entrySet()
-//                .stream()
-//                .sorted((o1,o2)->Double.compare(o2.getValue().get(0).getAverageMark(), o1.getValue().get(0).getAverageMark()))
-//                .collect(Collectors.toList());
-//        studentObservableList.clear();
-//        list.forEach((map)-> studentObservableList.addAll(map.getValue()));
-    }
 
 
     public void readDataBase(ActionEvent event) {
