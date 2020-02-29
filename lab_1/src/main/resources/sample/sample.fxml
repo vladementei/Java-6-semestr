@@ -10,15 +10,15 @@
 
 <AnchorPane prefHeight="700.0" prefWidth="900.0" minWidth="500.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
     <children>
-        <ListView fx:id="listViewProducts" layoutX="14.0" layoutY="32.0" prefHeight="648.0" prefWidth="471.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="414.0" AnchorPane.topAnchor="32.0">
+        <ListView fx:id="listViewWarehouses" layoutX="14.0" layoutY="32.0" prefHeight="648.0" prefWidth="471.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="414.0" AnchorPane.topAnchor="32.0">
             <cellFactory>
-                <ProductCellFactory />
+                <WarehouseCellFactory />
             </cellFactory>
         </ListView>
 
-        <ListView fx:id="listViewWarehouses" prefHeight="648.0" prefWidth="361.0" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="27.0" AnchorPane.topAnchor="32.0">
+        <ListView fx:id="listViewProducts" prefHeight="648.0" prefWidth="361.0" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="27.0" AnchorPane.topAnchor="32.0">
             <cellFactory>
-                <WarehouseCellFactory />
+                <ProductCellFactory />
             </cellFactory>
         </ListView>
 

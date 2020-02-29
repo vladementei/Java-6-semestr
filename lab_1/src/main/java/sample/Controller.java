@@ -94,6 +94,11 @@ public class Controller implements Initializable {
 
     public void addWarehouse(ActionEvent event){
         System.out.println("Create Warehouse");
+        AddWarehouseDialog dialog = new AddWarehouseDialog();
+        Warehouse warehouse = dialog.startDialog();
+        if(warehouse != null) {
+            System.out.println(warehouse);
+        }
     }
 
     public void addRemnant(ActionEvent event){
