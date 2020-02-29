@@ -85,6 +85,11 @@ public class Controller implements Initializable {
 
     public void addProduct(ActionEvent event){
         System.out.println("CREATE Product");
+        AddProductDialog dialog = new AddProductDialog();
+        Product product = dialog.startDialog();
+        if(product != null) {
+            System.out.println(product);
+        }
     }
 
     public void addWarehouse(ActionEvent event){
