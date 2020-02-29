@@ -1,6 +1,7 @@
 package sample;
 
 import entity.Product;
+import entity.Remnant;
 import entity.Warehouse;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -106,6 +107,11 @@ public class Controller implements Initializable {
         Warehouse warehouse = listViewWarehouses.getSelectionModel().getSelectedItem();
         if (product != null && warehouse != null){
             System.out.println("Create Remnant" + product + " " + warehouse);
+            AddRemnantDialog dialog = new AddRemnantDialog(product, warehouse);
+            Remnant remnant = dialog.startDialog();
+            if (remnant != null) {
+                System.out.println(remnant);
+            }
         }
     }
 
