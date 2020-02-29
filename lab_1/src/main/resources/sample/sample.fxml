@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import sample.ProductCellFactory?>
+<?import sample.WarehouseCellFactory?>
+
+<AnchorPane prefHeight="700.0" prefWidth="900.0" minWidth="500.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+    <children>
+        <ListView fx:id="listViewProducts" layoutX="14.0" layoutY="32.0" prefHeight="648.0" prefWidth="471.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="414.0" AnchorPane.topAnchor="32.0">
+            <cellFactory>
+                <ProductCellFactory />
+            </cellFactory>
+        </ListView>
+
+        <ListView fx:id="listViewWarehouses" prefHeight="648.0" prefWidth="361.0" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="27.0" AnchorPane.topAnchor="32.0">
+            <cellFactory>
+                <WarehouseCellFactory />
+            </cellFactory>
+        </ListView>
+
+        <MenuBar layoutY="2.0" prefHeight="25.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+            <menus>
+                <Menu mnemonicParsing="false" text="Options">
+                    <items>
+                        <MenuItem fx:id="menuOpenData" mnemonicParsing="false" onAction="#openFile" text="Open data file" />
+                        <MenuItem fx:id="menuSaveData" mnemonicParsing="false" onAction="#saveFile" text="Save data to file" />
+                        <MenuItem fx:id="menuReadDB" mnemonicParsing="false" onAction="#readDataBase" text="Read data from DB" />
+                        <MenuItem fx:id="menuSaveDB" mnemonicParsing="false" onAction="#saveDataBase" text="Save data to DB" />
+                        <MenuItem fx:id="menuRereateTable" mnemonicParsing="false" onAction="#recreateDataBaseTable" text="Recreate table in DB" />
+                        <MenuItem fx:id="menuAddStudent" mnemonicParsing="false" onAction="#addStudent" text="Add student" />
+                        <MenuItem fx:id="menuAnalyze" mnemonicParsing="false" onAction="#analyze" text="Sort" />
+                    </items>
+                </Menu>
+            </menus>
+        </MenuBar>
+    </children>
+</AnchorPane>
