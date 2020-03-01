@@ -52,9 +52,14 @@ public class Controller implements Initializable {
         });
         listViewProducts.setOnMouseClicked(event -> {
             if(event.getClickCount() == 2){
-                Product toDelete = listViewProducts.getSelectionModel().getSelectedItem();
-                if(toDelete != null) {
-                    System.out.println("OPEN: " + toDelete);
+                Product product = listViewProducts.getSelectionModel().getSelectedItem();
+                if(product != null) {
+                    System.out.println("OPEN: " + product);
+                    ProductDialog dialog = new ProductDialog(product);
+                    Product updated = dialog.startDialog();
+                    if (updated != null && !product.equals(updated)){
+                        System.out.println("UPDATED: " + updated);
+                    }
                 }
             }
         });
@@ -69,9 +74,9 @@ public class Controller implements Initializable {
         });
         listViewWarehouses.setOnMouseClicked(event -> {
             if(event.getClickCount() == 2){
-                Warehouse toDelete = listViewWarehouses.getSelectionModel().getSelectedItem();
-                if(toDelete != null) {
-                    System.out.println("OPEN: " + toDelete);
+                Warehouse warehouse = listViewWarehouses.getSelectionModel().getSelectedItem();
+                if(warehouse != null) {
+                    System.out.println("OPEN: " + warehouse);
                 }
             }
         });
@@ -80,7 +85,7 @@ public class Controller implements Initializable {
 
     public void addProduct(ActionEvent event){
         System.out.println("CREATE Product");
-        ProductDialog dialog = new ProductDialog();
+        ProductDialog dialog = new ProductDialog(null);
         Product product = dialog.startDialog();
         if(product != null) {
             System.out.println(product);

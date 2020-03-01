@@ -11,7 +11,7 @@ import java.util.Optional;
 
 public class ProductDialog extends Dialog<Product> {
 
-    public ProductDialog() {
+    public ProductDialog(Product product) {
         this.setTitle("Product");
         this.setHeaderText("Fill product information");
 
@@ -25,8 +25,10 @@ public class ProductDialog extends Dialog<Product> {
 
         TextField name = new TextField();
         name.setPromptText("Name");
+        name.setText(product != null ? product.getName() : "");
         TextField description = new TextField();
         description.setPromptText("Description");
+        description.setText(product != null ? product.getDescription() : "");
 
         grid.add(new Label("Name:"), 0, 0);
         grid.add(name, 1, 0);
@@ -34,7 +36,7 @@ public class ProductDialog extends Dialog<Product> {
         grid.add(description, 1, 1);
 
         Node addButton = this.getDialogPane().lookupButton(saveButtonType);
-        addButton.setDisable(true);
+        addButton.setDisable(product == null);
 
         name.textProperty().addListener((observable, oldValue, newValue) -> {
             addButton.setDisable(newValue.trim().isEmpty() || description.getText().trim().isEmpty());
@@ -49,7 +51,7 @@ public class ProductDialog extends Dialog<Product> {
 
         this.setResultConverter(dialogButton -> {
             if (dialogButton == saveButtonType) {
-                return new Product(0, name.getText(), description.getText());
+                return new Product(product != null ? product.getId() : 0, name.getText(), description.getText());
             }
             return null;
         });
