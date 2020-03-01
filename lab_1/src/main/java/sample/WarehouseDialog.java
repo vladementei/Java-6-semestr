@@ -58,7 +58,7 @@ public class WarehouseDialog extends Dialog<Warehouse> {
                     if(selectedItem != null) {
                         Remnant remnant = new Remnant(selectedItem.getKey().getId(), warehouse.getId(), selectedItem.getValue());
                         System.out.println("OPEN: " + remnant);
-                        RemnantDialog dialog = new RemnantDialog(selectedItem.getKey(), warehouse, selectedItem.getValue());
+                        RemnantDialog dialog = new RemnantDialog(remnant);
                         Remnant updated = dialog.startDialog();
                         if (updated != null && !remnant.equals(updated)){
                             System.out.println("UPDATED: " + updated);

@@ -12,7 +12,7 @@ import java.util.Optional;
 
 public class RemnantDialog extends Dialog<Remnant> {
 
-    public RemnantDialog(Product product, Warehouse warehouse, Integer currentAmount) {
+    public RemnantDialog(Remnant remnant) {
         this.setTitle("Remnant");
         this.setHeaderText("Fill remnant information");
 
@@ -26,17 +26,17 @@ public class RemnantDialog extends Dialog<Remnant> {
 
         TextField amount = new TextField();
         amount.setPromptText("amount");
-        amount.setText(currentAmount != null ? String.valueOf(currentAmount) : "");
+        amount.setText(String.valueOf(remnant.getAmount()));
 
         grid.add(new Label("Product:"), 0, 0);
-        grid.add(new Label(product.toString()), 1, 0);
+        grid.add(new Label(String.valueOf(remnant.getProductId())), 1, 0);
         grid.add(new Label("Warehouse:"), 0, 1);
-        grid.add(new Label(warehouse.toString()), 1, 1);
+        grid.add(new Label(String.valueOf(remnant.getWarehouseId())), 1, 1);
         grid.add(new Label("Amount:"), 0, 2);
         grid.add(amount, 1, 2);
 
         Node addButton = this.getDialogPane().lookupButton(saveButtonType);
-        addButton.setDisable(currentAmount == null);
+        //addButton.setDisable(currentAmount == null);
 
         amount.textProperty().addListener((observable, oldValue, newValue) -> {
             if (!newValue.matches("\\d*")) {
@@ -50,7 +50,7 @@ public class RemnantDialog extends Dialog<Remnant> {
 
         this.setResultConverter(dialogButton -> {
             if (dialogButton == saveButtonType) {
-                return new Remnant(product.getId(), warehouse.getId(), Integer.parseInt(amount.getText()));
+                return new Remnant(remnant.getProductId(), remnant.getWarehouseId(), Integer.parseInt(amount.getText()));
             }
             return null;
         });
