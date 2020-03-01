@@ -117,7 +117,7 @@ public class Controller implements Initializable {
         Warehouse warehouse = listViewWarehouses.getSelectionModel().getSelectedItem();
         if (product != null && warehouse != null){
             System.out.println("Create Remnant" + product + " " + warehouse);
-            RemnantDialog dialog = new RemnantDialog(product, warehouse);
+            RemnantDialog dialog = new RemnantDialog(product, warehouse, null);
             Remnant remnant = dialog.startDialog();
             if (remnant != null) {
                 System.out.println(remnant);

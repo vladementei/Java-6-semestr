@@ -1,5 +1,7 @@
 package entity;
 
+import java.util.Objects;
+
 public class Remnant {
     private int productId;
     private int warehouseId;
@@ -33,6 +35,21 @@ public class Remnant {
 
     public void setAmount(int amount) {
         this.amount = amount;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Remnant remnant = (Remnant) o;
+        return getProductId() == remnant.getProductId() &&
+                getWarehouseId() == remnant.getWarehouseId() &&
+                getAmount() == remnant.getAmount();
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getProductId(), getWarehouseId(), getAmount());
     }
 
     @Override

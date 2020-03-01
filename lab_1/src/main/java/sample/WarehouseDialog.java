@@ -1,18 +1,18 @@
 package sample;
 
 import entity.Product;
+import entity.Remnant;
 import entity.Warehouse;
 import javafx.collections.ObservableList;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.GridPane;
-import javafx.scene.text.TextAlignment;
 import javafx.util.Pair;
 
 import java.util.Optional;
@@ -42,7 +42,7 @@ public class WarehouseDialog extends Dialog<Warehouse> {
         grid.add(title, 1, 0);
         grid.add(new Label("Location:"), 0, 1);
         grid.add(location, 1, 1);
-        if (remnants != null){
+        if (warehouse != null && remnants != null){
             grid.add(new Label("Product name"), 0,2);
             Label amount = new Label("Amount");
             GridPane.setHalignment(amount, HPos.RIGHT);
@@ -51,6 +51,30 @@ public class WarehouseDialog extends Dialog<Warehouse> {
             ListView<Pair<Product, Integer>> listView = new ListView<>();
             listView.setCellFactory(new RemnantCellFactory());
             listView.setItems(remnants);
+
+            listView.setOnMouseClicked(event -> {
+                if(event.getClickCount() == 2){
+                    Pair<Product, Integer> selectedItem = listView.getSelectionModel().getSelectedItem();
+                    if(selectedItem != null) {
+                        Remnant remnant = new Remnant(selectedItem.getKey().getId(), warehouse.getId(), selectedItem.getValue());
+                        System.out.println("OPEN: " + remnant);
+                        RemnantDialog dialog = new RemnantDialog(selectedItem.getKey(), warehouse, selectedItem.getValue());
+                        Remnant updated = dialog.startDialog();
+                        if (updated != null && !remnant.equals(updated)){
+                            System.out.println("UPDATED: " + updated);
+                        }
+                    }
+                }
+            });
+
+            listView.setOnKeyPressed(event -> {
+                if(event.getCode() == KeyCode.DELETE){
+                    Pair<Product, Integer> selectedItem = listView.getSelectionModel().getSelectedItem();
+                    if (selectedItem != null) {
+                        System.out.println("DELETE REMNANT " + new Remnant(selectedItem.getKey().getId(), warehouse.getId(), selectedItem.getValue()));
+                    }
+                }
+            });
             grid.add(listView, 0, 3, 2, 1);
         }
 

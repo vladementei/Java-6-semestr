@@ -12,7 +12,7 @@ import java.util.Optional;
 
 public class RemnantDialog extends Dialog<Remnant> {
 
-    public RemnantDialog(Product product, Warehouse warehouse) {
+    public RemnantDialog(Product product, Warehouse warehouse, Integer currentAmount) {
         this.setTitle("Remnant");
         this.setHeaderText("Fill remnant information");
 
@@ -26,6 +26,7 @@ public class RemnantDialog extends Dialog<Remnant> {
 
         TextField amount = new TextField();
         amount.setPromptText("amount");
+        amount.setText(currentAmount != null ? String.valueOf(currentAmount) : "");
 
         grid.add(new Label("Product:"), 0, 0);
         grid.add(new Label(product.toString()), 1, 0);
@@ -35,7 +36,7 @@ public class RemnantDialog extends Dialog<Remnant> {
         grid.add(amount, 1, 2);
 
         Node addButton = this.getDialogPane().lookupButton(saveButtonType);
-        addButton.setDisable(true);
+        addButton.setDisable(currentAmount == null);
 
         amount.textProperty().addListener((observable, oldValue, newValue) -> {
             if (!newValue.matches("\\d*")) {
