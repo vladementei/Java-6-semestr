@@ -9,7 +9,7 @@ import javafx.scene.layout.GridPane;
 import java.util.Optional;
 
 public class WarehouseDialog extends Dialog<Warehouse> {
-    public WarehouseDialog() {
+    public WarehouseDialog(Warehouse warehouse) {
         this.setTitle("Warehouse");
         this.setHeaderText("Fill warehouse information");
 
@@ -23,8 +23,10 @@ public class WarehouseDialog extends Dialog<Warehouse> {
 
         TextField title = new TextField();
         title.setPromptText("Title");
+        title.setText(warehouse != null ? warehouse.getTitle() : "");
         TextField location = new TextField();
         location.setPromptText("Location");
+        location.setText(warehouse != null ? warehouse.getLocation() : "");
 
         grid.add(new Label("Title:"), 0, 0);
         grid.add(title, 1, 0);
@@ -32,7 +34,7 @@ public class WarehouseDialog extends Dialog<Warehouse> {
         grid.add(location, 1, 1);
 
         Node addButton = this.getDialogPane().lookupButton(saveButtonType);
-        addButton.setDisable(true);
+        addButton.setDisable(warehouse == null);
 
         title.textProperty().addListener((observable, oldValue, newValue) -> {
             addButton.setDisable(newValue.trim().isEmpty() || location.getText().trim().isEmpty());
@@ -47,7 +49,7 @@ public class WarehouseDialog extends Dialog<Warehouse> {
 
         this.setResultConverter(dialogButton -> {
             if (dialogButton == saveButtonType) {
-                return new Warehouse(0, title.getText(), location.getText());
+                return new Warehouse(warehouse != null ? warehouse.getId() : 0, title.getText(), location.getText());
             }
             return null;
         });

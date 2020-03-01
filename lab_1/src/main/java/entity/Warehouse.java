@@ -1,5 +1,7 @@
 package entity;
 
+import java.util.Objects;
+
 public class Warehouse {
     private int id;
     private String title;
@@ -33,6 +35,21 @@ public class Warehouse {
 
     public void setLocation(String location) {
         this.location = location;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Warehouse warehouse = (Warehouse) o;
+        return getId() == warehouse.getId() &&
+                Objects.equals(getTitle(), warehouse.getTitle()) &&
+                Objects.equals(getLocation(), warehouse.getLocation());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getTitle(), getLocation());
     }
 
     @Override

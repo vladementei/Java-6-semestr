@@ -77,6 +77,11 @@ public class Controller implements Initializable {
                 Warehouse warehouse = listViewWarehouses.getSelectionModel().getSelectedItem();
                 if(warehouse != null) {
                     System.out.println("OPEN: " + warehouse);
+                    WarehouseDialog dialog = new WarehouseDialog(warehouse);
+                    Warehouse updated = dialog.startDialog();
+                    if(updated != null && !warehouse.equals(updated)){
+                        System.out.println("UPDATED: " + updated);
+                    }
                 }
             }
         });
@@ -94,7 +99,7 @@ public class Controller implements Initializable {
 
     public void addWarehouse(ActionEvent event){
         System.out.println("Create Warehouse");
-        WarehouseDialog dialog = new WarehouseDialog();
+        WarehouseDialog dialog = new WarehouseDialog(null);
         Warehouse warehouse = dialog.startDialog();
         if(warehouse != null) {
             System.out.println(warehouse);
