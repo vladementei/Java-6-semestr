@@ -10,6 +10,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
+import javafx.util.Pair;
 
 import java.net.URL;
 import java.util.*;
@@ -77,7 +78,12 @@ public class Controller implements Initializable {
                 Warehouse warehouse = listViewWarehouses.getSelectionModel().getSelectedItem();
                 if(warehouse != null) {
                     System.out.println("OPEN: " + warehouse);
-                    WarehouseDialog dialog = new WarehouseDialog(warehouse);
+                    ObservableList<Pair<Product, Integer>> remnants = FXCollections.observableArrayList();
+                    remnants.addAll(
+                            new Pair<>(productsObservableList.get(0), 10),
+                            new Pair<>(productsObservableList.get(1), 20)
+                    );
+                    WarehouseDialog dialog = new WarehouseDialog(warehouse, remnants);
                     Warehouse updated = dialog.startDialog();
                     if(updated != null && !warehouse.equals(updated)){
                         System.out.println("UPDATED: " + updated);
@@ -99,7 +105,7 @@ public class Controller implements Initializable {
 
     public void addWarehouse(ActionEvent event){
         System.out.println("Create Warehouse");
-        WarehouseDialog dialog = new WarehouseDialog(null);
+        WarehouseDialog dialog = new WarehouseDialog(null, null);
         Warehouse warehouse = dialog.startDialog();
         if(warehouse != null) {
             System.out.println(warehouse);
