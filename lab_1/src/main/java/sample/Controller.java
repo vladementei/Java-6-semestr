@@ -10,15 +10,9 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
-import javafx.stage.FileChooser;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InvalidClassException;
 import java.net.URL;
-import java.sql.SQLException;
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class Controller implements Initializable {
 
@@ -86,7 +80,7 @@ public class Controller implements Initializable {
 
     public void addProduct(ActionEvent event){
         System.out.println("CREATE Product");
-        AddProductDialog dialog = new AddProductDialog();
+        ProductDialog dialog = new ProductDialog();
         Product product = dialog.startDialog();
         if(product != null) {
             System.out.println(product);
@@ -95,7 +89,7 @@ public class Controller implements Initializable {
 
     public void addWarehouse(ActionEvent event){
         System.out.println("Create Warehouse");
-        AddWarehouseDialog dialog = new AddWarehouseDialog();
+        WarehouseDialog dialog = new WarehouseDialog();
         Warehouse warehouse = dialog.startDialog();
         if(warehouse != null) {
             System.out.println(warehouse);
@@ -107,7 +101,7 @@ public class Controller implements Initializable {
         Warehouse warehouse = listViewWarehouses.getSelectionModel().getSelectedItem();
         if (product != null && warehouse != null){
             System.out.println("Create Remnant" + product + " " + warehouse);
-            AddRemnantDialog dialog = new AddRemnantDialog(product, warehouse);
+            RemnantDialog dialog = new RemnantDialog(product, warehouse);
             Remnant remnant = dialog.startDialog();
             if (remnant != null) {
                 System.out.println(remnant);

@@ -9,14 +9,14 @@ import javafx.scene.layout.GridPane;
 import java.util.Optional;
 
 
-public class AddProductDialog extends Dialog<Product> {
+public class ProductDialog extends Dialog<Product> {
 
-    public AddProductDialog() {
-        this.setTitle("Add product");
+    public ProductDialog() {
+        this.setTitle("Product");
         this.setHeaderText("Fill product information");
 
-        ButtonType addButtonType = new ButtonType("Add", ButtonBar.ButtonData.OK_DONE);
-        this.getDialogPane().getButtonTypes().addAll(addButtonType, ButtonType.CANCEL);
+        ButtonType saveButtonType = new ButtonType("Save", ButtonBar.ButtonData.OK_DONE);
+        this.getDialogPane().getButtonTypes().addAll(saveButtonType, ButtonType.CANCEL);
 
         GridPane grid = new GridPane();
         grid.setHgap(10);
@@ -33,7 +33,7 @@ public class AddProductDialog extends Dialog<Product> {
         grid.add(new Label("Description:"), 0, 1);
         grid.add(description, 1, 1);
 
-        Node addButton = this.getDialogPane().lookupButton(addButtonType);
+        Node addButton = this.getDialogPane().lookupButton(saveButtonType);
         addButton.setDisable(true);
 
         name.textProperty().addListener((observable, oldValue, newValue) -> {
@@ -48,7 +48,7 @@ public class AddProductDialog extends Dialog<Product> {
         name.requestFocus();
 
         this.setResultConverter(dialogButton -> {
-            if (dialogButton == addButtonType) {
+            if (dialogButton == saveButtonType) {
                 return new Product(0, name.getText(), description.getText());
             }
             return null;

@@ -8,13 +8,13 @@ import javafx.scene.layout.GridPane;
 
 import java.util.Optional;
 
-public class AddWarehouseDialog extends Dialog<Warehouse> {
-    public AddWarehouseDialog() {
-        this.setTitle("Add warehouse");
+public class WarehouseDialog extends Dialog<Warehouse> {
+    public WarehouseDialog() {
+        this.setTitle("Warehouse");
         this.setHeaderText("Fill warehouse information");
 
-        ButtonType addButtonType = new ButtonType("Add", ButtonBar.ButtonData.OK_DONE);
-        this.getDialogPane().getButtonTypes().addAll(addButtonType, ButtonType.CANCEL);
+        ButtonType saveButtonType = new ButtonType("Save", ButtonBar.ButtonData.OK_DONE);
+        this.getDialogPane().getButtonTypes().addAll(saveButtonType, ButtonType.CANCEL);
 
         GridPane grid = new GridPane();
         grid.setHgap(10);
@@ -31,7 +31,7 @@ public class AddWarehouseDialog extends Dialog<Warehouse> {
         grid.add(new Label("Location:"), 0, 1);
         grid.add(location, 1, 1);
 
-        Node addButton = this.getDialogPane().lookupButton(addButtonType);
+        Node addButton = this.getDialogPane().lookupButton(saveButtonType);
         addButton.setDisable(true);
 
         title.textProperty().addListener((observable, oldValue, newValue) -> {
@@ -46,7 +46,7 @@ public class AddWarehouseDialog extends Dialog<Warehouse> {
         title.requestFocus();
 
         this.setResultConverter(dialogButton -> {
-            if (dialogButton == addButtonType) {
+            if (dialogButton == saveButtonType) {
                 return new Warehouse(0, title.getText(), location.getText());
             }
             return null;

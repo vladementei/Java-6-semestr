@@ -10,14 +10,14 @@ import javafx.scene.layout.GridPane;
 
 import java.util.Optional;
 
-public class AddRemnantDialog extends Dialog<Remnant> {
+public class RemnantDialog extends Dialog<Remnant> {
 
-    public AddRemnantDialog(Product product, Warehouse warehouse) {
-        this.setTitle("Add Remnant");
+    public RemnantDialog(Product product, Warehouse warehouse) {
+        this.setTitle("Remnant");
         this.setHeaderText("Fill remnant information");
 
-        ButtonType addButtonType = new ButtonType("Add", ButtonBar.ButtonData.OK_DONE);
-        this.getDialogPane().getButtonTypes().addAll(addButtonType, ButtonType.CANCEL);
+        ButtonType saveButtonType = new ButtonType("Save", ButtonBar.ButtonData.OK_DONE);
+        this.getDialogPane().getButtonTypes().addAll(saveButtonType, ButtonType.CANCEL);
 
         GridPane grid = new GridPane();
         grid.setHgap(10);
@@ -34,7 +34,7 @@ public class AddRemnantDialog extends Dialog<Remnant> {
         grid.add(new Label("Amount:"), 0, 2);
         grid.add(amount, 1, 2);
 
-        Node addButton = this.getDialogPane().lookupButton(addButtonType);
+        Node addButton = this.getDialogPane().lookupButton(saveButtonType);
         addButton.setDisable(true);
 
         amount.textProperty().addListener((observable, oldValue, newValue) -> {
@@ -48,7 +48,7 @@ public class AddRemnantDialog extends Dialog<Remnant> {
         amount.requestFocus();
 
         this.setResultConverter(dialogButton -> {
-            if (dialogButton == addButtonType) {
+            if (dialogButton == saveButtonType) {
                 return new Remnant(product.getId(), warehouse.getId(), Integer.parseInt(amount.getText()));
             }
             return null;
