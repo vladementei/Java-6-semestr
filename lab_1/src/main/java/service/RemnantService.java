@@ -25,6 +25,10 @@ public class RemnantService {
     private RemnantService() {
     }
 
+    public static RemnantService getRemnantService() {
+        return remnantService;
+    }
+
     public int getProductAmount(Product product) throws SQLException {
         return remnantRepository.getProductAmount(product);
     }
@@ -33,7 +37,7 @@ public class RemnantService {
         return remnantRepository.getAllByProduct(product);
     }
 
-    List<Remnant> getAllByWarehouse(Warehouse warehouse) throws SQLException {
+    public List<Remnant> getAllByWarehouse(Warehouse warehouse) throws SQLException {
         return remnantRepository.getAllByWarehouse(warehouse);
     }
 

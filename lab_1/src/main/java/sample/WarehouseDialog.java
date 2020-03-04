@@ -14,10 +14,15 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.GridPane;
 import javafx.util.Pair;
+import service.RemnantService;
 
+import java.sql.SQLException;
 import java.util.Optional;
 
 public class WarehouseDialog extends Dialog<Warehouse> {
+
+    private RemnantService remnantService = RemnantService.getRemnantService();
+
     public WarehouseDialog(Warehouse warehouse, ObservableList<Pair<Product, Integer>> remnants) {
         this.setTitle("Warehouse");
         this.setHeaderText("Fill warehouse information");
@@ -57,11 +62,16 @@ public class WarehouseDialog extends Dialog<Warehouse> {
                     Pair<Product, Integer> selectedItem = listView.getSelectionModel().getSelectedItem();
                     if(selectedItem != null) {
                         Remnant remnant = new Remnant(selectedItem.getKey().getId(), warehouse.getId(), selectedItem.getValue());
-                        System.out.println("OPEN: " + remnant);
                         RemnantDialog dialog = new RemnantDialog(remnant);
                         Remnant updated = dialog.startDialog();
                         if (updated != null && !remnant.equals(updated)){
-                            System.out.println("UPDATED: " + updated);
+                            try {
+                                updated = remnantService.update(updated);
+                                remnants.remove(selectedItem);
+                                remnants.add(new Pair<>(selectedItem.getKey(), updated.getAmount()));
+                            } catch (SQLException e) {
+                                e.printStackTrace();
+                            }
                         }
                     }
                 }
@@ -71,7 +81,12 @@ public class WarehouseDialog extends Dialog<Warehouse> {
                 if(event.getCode() == KeyCode.DELETE){
                     Pair<Product, Integer> selectedItem = listView.getSelectionModel().getSelectedItem();
                     if (selectedItem != null) {
-                        System.out.println("DELETE REMNANT " + new Remnant(selectedItem.getKey().getId(), warehouse.getId(), selectedItem.getValue()));
+                        try {
+                            remnantService.delete(new Remnant(selectedItem.getKey().getId(), warehouse.getId(), selectedItem.getValue()));
+                            remnants.remove(selectedItem);
+                        } catch (SQLException e) {
+                            e.printStackTrace();
+                        }
                     }
                 }
             });

@@ -12,11 +12,13 @@ import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.util.Pair;
 import service.ProductService;
+import service.RemnantService;
 import service.WarehouseService;
 
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class Controller implements Initializable {
 
@@ -30,7 +32,7 @@ public class Controller implements Initializable {
 
     private ProductService productService = ProductService.getProductService();
     private WarehouseService warehouseService = WarehouseService.getWarehouseService();
-
+    private RemnantService remnantService = RemnantService.getRemnantService();
 
 
     public Controller()  {
@@ -73,7 +75,7 @@ public class Controller implements Initializable {
                     Product updated = dialog.startDialog();
                     if (updated != null && !product.equals(updated)){
                         try {
-                            productService.updateProduct(updated);
+                            updated = productService.updateProduct(updated);
                             productsObservableList.remove(product);
                             productsObservableList.add(updated);
                         } catch (SQLException e) {
@@ -102,24 +104,31 @@ public class Controller implements Initializable {
             if(event.getClickCount() == 2){
                 Warehouse warehouse = listViewWarehouses.getSelectionModel().getSelectedItem();
                 if(warehouse != null) {
-                    System.out.println("OPEN: " + warehouse);
-                    ObservableList<Pair<Product, Integer>> remnants = FXCollections.observableArrayList();
-                    remnants.addAll(
-                            new Pair<>(productsObservableList.get(0), 10),
-                            new Pair<>(productsObservableList.get(1), 20)
-                    );
-                    WarehouseDialog dialog = new WarehouseDialog(warehouse, remnants);
-                    Warehouse updated = dialog.startDialog();
-                    if(updated != null && !warehouse.equals(updated)){
-                        try {
-                            warehouseService.updateWarehouse(updated);
+                    try {
+                        ObservableList<Pair<Product, Integer>> remnants = FXCollections.observableArrayList();
+                        remnants.addAll(remnantService.getAllByWarehouse(warehouse).stream()
+                         .map(remnant -> {
+                            try {
+                                return new Pair<>(productService.getProductById(remnant.getProductId()), remnant.getAmount());
+                            } catch (SQLException e) {
+                                e.printStackTrace();
+                                return null;
+                            }
+                        })
+                        .filter(Objects::nonNull)
+                        .collect(Collectors.toList()));
+
+                        WarehouseDialog dialog = new WarehouseDialog(warehouse, remnants);
+                        Warehouse updated = dialog.startDialog();
+                        if(updated != null && !warehouse.equals(updated)){
+                            updated = warehouseService.updateWarehouse(updated);
                             warehousesObservableList.remove(warehouse);
                             warehousesObservableList.add(updated);
-                        } catch (SQLException e) {
-                            e.printStackTrace();
                         }
-
+                    } catch (SQLException e) {
+                        e.printStackTrace();
                     }
+
                 }
             }
         });
@@ -131,7 +140,7 @@ public class Controller implements Initializable {
         Product product = dialog.startDialog();
         if(product != null) {
             try {
-                productService.insertProduct(product);
+                product = productService.insertProduct(product);
                 productsObservableList.add(product);
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -145,7 +154,7 @@ public class Controller implements Initializable {
         Warehouse warehouse = dialog.startDialog();
         if(warehouse != null) {
             try {
-                warehouseService.insertWarehouse(warehouse);
+                warehouse = warehouseService.insertWarehouse(warehouse);
                 warehousesObservableList.add(warehouse);
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -157,11 +166,14 @@ public class Controller implements Initializable {
         Product product = listViewProducts.getSelectionModel().getSelectedItem();
         Warehouse warehouse = listViewWarehouses.getSelectionModel().getSelectedItem();
         if (product != null && warehouse != null){
-            System.out.println("Create Remnant" + product + " " + warehouse);
             RemnantDialog dialog = new RemnantDialog(new Remnant(product.getId(), warehouse.getId(), 0));
             Remnant remnant = dialog.startDialog();
             if (remnant != null) {
-                System.out.println(remnant);
+                try {
+                    remnantService.insert(remnant);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
             }
         }
     }
