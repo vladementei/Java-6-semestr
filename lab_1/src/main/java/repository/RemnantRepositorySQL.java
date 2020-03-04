@@ -28,8 +28,8 @@ public class RemnantRepositorySQL extends SQLDatabase implements RemnantReposito
                 WAREHOUSE_ID + " INTEGER NOT NULL, " +
                 AMOUNT + " INTEGER , " +
                 " UNIQUE (" + PRODUCT_ID + ", " + WAREHOUSE_ID + "), " +
-                " foreign key (" + PRODUCT_ID + ") references products(id), " +
-                " foreign key (" + WAREHOUSE_ID + ") references warehouses (id))";
+                " foreign key (" + PRODUCT_ID + ") references products(id) on delete cascade, " +
+                " foreign key (" + WAREHOUSE_ID + ") references warehouses (id) on delete cascade)";
         this.statement.executeUpdate(sql);
         System.out.println("Table '" + TABLE_NAME + "' connected successfully");
     }
