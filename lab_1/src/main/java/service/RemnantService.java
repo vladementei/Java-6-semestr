@@ -5,6 +5,7 @@ import entity.Remnant;
 import entity.Warehouse;
 import repository.RemnantRepository;
 import repository.RemnantRepositorySQL;
+import sample.Dialogs;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -19,6 +20,7 @@ public class RemnantService {
             remnantService = new RemnantService();
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
+            Dialogs.showErrorDialog(e.getMessage());
         }
     }
 

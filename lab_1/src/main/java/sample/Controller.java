@@ -42,11 +42,13 @@ public class Controller implements Initializable {
             productsObservableList.addAll(productService.getALLProducts());
         } catch (SQLException e) {
             e.printStackTrace();
+            Dialogs.showErrorDialog(e.getMessage());
         }
         try {
             warehousesObservableList.addAll(warehouseService.getALLWarehouses());
         } catch (SQLException e) {
             e.printStackTrace();
+            Dialogs.showErrorDialog(e.getMessage());
         }
     }
 
@@ -62,6 +64,7 @@ public class Controller implements Initializable {
                         productsObservableList.remove(toDelete);
                     } catch (SQLException e) {
                         e.printStackTrace();
+                        Dialogs.showErrorDialog(e.getMessage());
                     }
                 }
             }
@@ -70,7 +73,6 @@ public class Controller implements Initializable {
             if(event.getClickCount() == 2){
                 Product product = listViewProducts.getSelectionModel().getSelectedItem();
                 if(product != null) {
-                    System.out.println("OPEN: " + product);
                     ProductDialog dialog = new ProductDialog(product);
                     Product updated = dialog.startDialog();
                     if (updated != null && !product.equals(updated)){
@@ -80,6 +82,7 @@ public class Controller implements Initializable {
                             productsObservableList.add(updated);
                         } catch (SQLException e) {
                             e.printStackTrace();
+                            Dialogs.showErrorDialog(e.getMessage());
                         }
                     }
                 }
@@ -95,6 +98,7 @@ public class Controller implements Initializable {
                         warehousesObservableList.remove(toDelete);
                     } catch (SQLException e) {
                         e.printStackTrace();
+                        Dialogs.showErrorDialog(e.getMessage());
                     }
 
                 }
@@ -112,6 +116,7 @@ public class Controller implements Initializable {
                                 return new Pair<>(productService.getProductById(remnant.getProductId()), remnant.getAmount());
                             } catch (SQLException e) {
                                 e.printStackTrace();
+                                Dialogs.showErrorDialog(e.getMessage());
                                 return null;
                             }
                         })
@@ -127,6 +132,7 @@ public class Controller implements Initializable {
                         }
                     } catch (SQLException e) {
                         e.printStackTrace();
+                        Dialogs.showErrorDialog(e.getMessage());
                     }
 
                 }
@@ -144,8 +150,8 @@ public class Controller implements Initializable {
                 productsObservableList.add(product);
             } catch (SQLException e) {
                 e.printStackTrace();
+                Dialogs.showErrorDialog(e.getMessage());
             }
-
         }
     }
 
@@ -158,6 +164,7 @@ public class Controller implements Initializable {
                 warehousesObservableList.add(warehouse);
             } catch (SQLException e) {
                 e.printStackTrace();
+                Dialogs.showErrorDialog(e.getMessage());
             }
         }
     }
@@ -173,8 +180,11 @@ public class Controller implements Initializable {
                     remnantService.insert(remnant);
                 } catch (SQLException e) {
                     e.printStackTrace();
+                    Dialogs.showErrorDialog(e.getMessage());
                 }
             }
+        } else {
+            Dialogs.showErrorDialog("First select one product and one warehouse!!!");
         }
     }
 

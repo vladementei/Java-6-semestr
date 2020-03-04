@@ -3,6 +3,7 @@ package service;
 import entity.Product;
 import repository.ProductRepository;
 import repository.ProductRepositorySQL;
+import sample.Dialogs;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -17,6 +18,7 @@ public class ProductService {
             productService = new ProductService();
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
+            Dialogs.showErrorDialog(e.getMessage());
         }
     }
 

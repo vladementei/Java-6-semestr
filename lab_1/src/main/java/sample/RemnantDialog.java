@@ -38,11 +38,13 @@ public class RemnantDialog extends Dialog<Remnant> {
             productLabel = productService.getProductById(remnant.getProductId()).toString();
         } catch (SQLException e) {
             e.printStackTrace();
+            Dialogs.showErrorDialog(e.getMessage());
         }
         try {
             warehouseLabel = warehouseService.getWarehouseById(remnant.getWarehouseId()).toString();
         } catch (SQLException e) {
             e.printStackTrace();
+            Dialogs.showErrorDialog(e.getMessage());
         }
 
         grid.add(new Label("Product:"), 0, 0);

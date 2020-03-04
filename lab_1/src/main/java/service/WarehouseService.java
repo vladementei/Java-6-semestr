@@ -3,6 +3,7 @@ package service;
 import entity.Warehouse;
 import repository.WarehouseRepository;
 import repository.WarehouseRepositorySQL;
+import sample.Dialogs;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -17,6 +18,7 @@ public class WarehouseService {
             warehouseService = new WarehouseService();
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
+            Dialogs.showErrorDialog(e.getMessage());
         }
     }
 

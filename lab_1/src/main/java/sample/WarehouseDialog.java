@@ -71,6 +71,7 @@ public class WarehouseDialog extends Dialog<Warehouse> {
                                 remnants.add(new Pair<>(selectedItem.getKey(), updated.getAmount()));
                             } catch (SQLException e) {
                                 e.printStackTrace();
+                                Dialogs.showErrorDialog(e.getMessage());
                             }
                         }
                     }
@@ -86,6 +87,7 @@ public class WarehouseDialog extends Dialog<Warehouse> {
                             remnants.remove(selectedItem);
                         } catch (SQLException e) {
                             e.printStackTrace();
+                            Dialogs.showErrorDialog(e.getMessage());
                         }
                     }
                 }
