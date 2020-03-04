@@ -1,16 +1,20 @@
 package sample;
 
-import entity.Product;
 import entity.Remnant;
-import entity.Warehouse;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
+import service.ProductService;
+import service.WarehouseService;
 
+import java.sql.SQLException;
 import java.util.Optional;
 
 public class RemnantDialog extends Dialog<Remnant> {
+
+    private ProductService productService = ProductService.getProductService();
+    private WarehouseService warehouseService = WarehouseService.getWarehouseService();
 
     public RemnantDialog(Remnant remnant) {
         this.setTitle("Remnant");
@@ -28,15 +32,27 @@ public class RemnantDialog extends Dialog<Remnant> {
         amount.setPromptText("amount");
         amount.setText(String.valueOf(remnant.getAmount()));
 
+        String productLabel = String.valueOf(remnant.getProductId());
+        String warehouseLabel = String.valueOf(remnant.getWarehouseId());
+        try {
+            productLabel = productService.getProductById(remnant.getProductId()).toString();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        try {
+            warehouseLabel = warehouseService.getWarehouseById(remnant.getWarehouseId()).toString();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
         grid.add(new Label("Product:"), 0, 0);
-        grid.add(new Label(String.valueOf(remnant.getProductId())), 1, 0);
+        grid.add(new Label(productLabel), 1, 0);
         grid.add(new Label("Warehouse:"), 0, 1);
-        grid.add(new Label(String.valueOf(remnant.getWarehouseId())), 1, 1);
+        grid.add(new Label(warehouseLabel), 1, 1);
         grid.add(new Label("Amount:"), 0, 2);
         grid.add(amount, 1, 2);
 
         Node addButton = this.getDialogPane().lookupButton(saveButtonType);
-        //addButton.setDisable(currentAmount == null);
 
         amount.textProperty().addListener((observable, oldValue, newValue) -> {
             if (!newValue.matches("\\d*")) {
