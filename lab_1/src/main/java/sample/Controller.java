@@ -11,8 +11,11 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.util.Pair;
+import service.ProductService;
+import service.WarehouseService;
 
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.*;
 
 public class Controller implements Initializable {
@@ -21,23 +24,28 @@ public class Controller implements Initializable {
     private ListView<Product> listViewProducts;
     @FXML
     private ListView<Warehouse> listViewWarehouses;
-    @FXML
-    private MenuItem menuOpenData;
 
     private ObservableList<Product> productsObservableList;
     private ObservableList<Warehouse> warehousesObservableList;
 
+    private ProductService productService = ProductService.getProductService();
+    private WarehouseService warehouseService = WarehouseService.getWarehouseService();
+
+
+
     public Controller()  {
         productsObservableList = FXCollections.observableArrayList();
         warehousesObservableList = FXCollections.observableArrayList();
-        productsObservableList.addAll(
-                new Product(1, "pen", "beautiful"),
-                new Product(2, "pencil", "red")
-        );
-        warehousesObservableList.addAll(
-                new Warehouse(1, "Main", "Nezavisimosti 4"),
-                new Warehouse(2, "Big", "Golubeva 10")
-        );
+        try {
+            productsObservableList.addAll(productService.getALLProducts());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        try {
+            warehousesObservableList.addAll(warehouseService.getALLWarehouses());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -47,7 +55,12 @@ public class Controller implements Initializable {
             if(event.getCode() == KeyCode.DELETE){
                 Product toDelete = listViewProducts.getSelectionModel().getSelectedItem();
                 if(toDelete != null) {
-                    System.out.println("DELETE: " + toDelete);
+                    try {
+                        productService.deleteProduct(toDelete);
+                        productsObservableList.remove(toDelete);
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
         });
@@ -59,7 +72,13 @@ public class Controller implements Initializable {
                     ProductDialog dialog = new ProductDialog(product);
                     Product updated = dialog.startDialog();
                     if (updated != null && !product.equals(updated)){
-                        System.out.println("UPDATED: " + updated);
+                        try {
+                            productService.updateProduct(updated);
+                            productsObservableList.remove(product);
+                            productsObservableList.add(updated);
+                        } catch (SQLException e) {
+                            e.printStackTrace();
+                        }
                     }
                 }
             }
@@ -69,7 +88,13 @@ public class Controller implements Initializable {
             if(event.getCode() == KeyCode.DELETE){
                 Warehouse toDelete = listViewWarehouses.getSelectionModel().getSelectedItem();
                 if(toDelete != null) {
-                    System.out.println("DELETE: " + toDelete);
+                    try {
+                        warehouseService.deleteWarehouse(toDelete);
+                        warehousesObservableList.remove(toDelete);
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+
                 }
             }
         });
@@ -86,7 +111,14 @@ public class Controller implements Initializable {
                     WarehouseDialog dialog = new WarehouseDialog(warehouse, remnants);
                     Warehouse updated = dialog.startDialog();
                     if(updated != null && !warehouse.equals(updated)){
-                        System.out.println("UPDATED: " + updated);
+                        try {
+                            warehouseService.updateWarehouse(updated);
+                            warehousesObservableList.remove(warehouse);
+                            warehousesObservableList.add(updated);
+                        } catch (SQLException e) {
+                            e.printStackTrace();
+                        }
+
                     }
                 }
             }
@@ -95,20 +127,29 @@ public class Controller implements Initializable {
 
 
     public void addProduct(ActionEvent event){
-        System.out.println("CREATE Product");
         ProductDialog dialog = new ProductDialog(null);
         Product product = dialog.startDialog();
         if(product != null) {
-            System.out.println(product);
+            try {
+                productService.insertProduct(product);
+                productsObservableList.add(product);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
         }
     }
 
     public void addWarehouse(ActionEvent event){
-        System.out.println("Create Warehouse");
         WarehouseDialog dialog = new WarehouseDialog(null, null);
         Warehouse warehouse = dialog.startDialog();
         if(warehouse != null) {
-            System.out.println(warehouse);
+            try {
+                warehouseService.insertWarehouse(warehouse);
+                warehousesObservableList.add(warehouse);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -125,70 +166,4 @@ public class Controller implements Initializable {
         }
     }
 
-
-    public void addStudent(ActionEvent event){
-//        AddStudentDialog dialog = new AddStudentDialog();
-//        Student newStudent = dialog.startDialog();
-//        addStudentToList(newStudent);
-    }
-
-//    private void addStudentToList(Student newStudent){
-//        if(newStudent != null){
-//            if(studentObservableList.stream().anyMatch(elem -> elem.getGroup() == newStudent.getGroup())){
-//                long index = studentObservableList.stream()
-//                        .takeWhile(elem -> elem.getGroup() != newStudent.getGroup())
-//                        .count();
-//                studentObservableList.add((int)index + 1, newStudent);
-//            }else {
-//                studentObservableList.add(new GroupInfo(newStudent.getGroup()));
-//                studentObservableList.add(newStudent);
-//            }
-//            countAllGroupsMarks();
-//        }
-//    }
-
-
-
-    public void readDataBase(ActionEvent event) {
-//        try {
-//            StudentDataBase db = new StudentDataBase();
-//            ArrayList<Student> newStudents = db.readStudents();
-//            studentObservableList.clear();
-//            for(Student student: newStudents){
-//                addStudentToList(student);
-//            }
-//            db.close();
-//            Dialogs.showConfirmDialog("Success read from db");
-//        } catch (ClassNotFoundException e) {
-//            Dialogs.showErrorDialog("JDBC not found");
-//        } catch (SQLException e) {
-//            Dialogs.showErrorDialog("SQL error " + e.getMessage());
-//        }
-    }
-
-    public void saveDataBase(ActionEvent event) {
-//        try {
-//            StudentDataBase db = new StudentDataBase();
-//            db.writeStudents(new ArrayList<>(studentObservableList));
-//            db.close();
-//            Dialogs.showConfirmDialog("Success write to db");
-//        } catch (ClassNotFoundException e) {
-//            Dialogs.showErrorDialog("JDBC not found");
-//        } catch (SQLException e) {
-//            Dialogs.showErrorDialog("SQL error " + e.getMessage());
-//        }
-    }
-
-    public void recreateDataBaseTable(ActionEvent event) {
-//        try {
-//            StudentDataBase db = new StudentDataBase();
-//            db.createTable();
-//            db.close();
-//            Dialogs.showConfirmDialog("Success recreate table in db");
-//        } catch (ClassNotFoundException e) {
-//            Dialogs.showErrorDialog("JDBC not found");
-//        } catch (SQLException e) {
-//            Dialogs.showErrorDialog("SQL error " + e.getMessage());
-//        }
-    }
 }
