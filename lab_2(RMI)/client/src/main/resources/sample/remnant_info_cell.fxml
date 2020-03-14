@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListCell?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<fx:root type="javafx.scene.control.ListCell" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1">
+    <graphic>
+        <AnchorPane prefHeight="40.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1">
+            <children>
+                <Label fx:id="productName" prefHeight="40.0" text="Label" AnchorPane.leftAnchor="10" AnchorPane.rightAnchor="70.0" />
+                <Label fx:id="amount" alignment="CENTER_RIGHT" prefHeight="40.0" prefWidth="50.0" text="Label" textAlignment="RIGHT" AnchorPane.rightAnchor="10.0" />
+            </children>
+        </AnchorPane>
+    </graphic>
+</fx:root>
