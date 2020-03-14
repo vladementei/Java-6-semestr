@@ -1,8 +1,10 @@
 package entity;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class Warehouse {
+public class Warehouse implements Serializable {
+    private static final long serialVersionUID = 5678L;
     private int id;
     private String title;
     private String location;

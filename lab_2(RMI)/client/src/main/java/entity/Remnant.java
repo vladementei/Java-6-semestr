@@ -1,8 +1,10 @@
 package entity;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class Remnant {
+public class Remnant implements Serializable {
+    private static final long serialVersionUID = 12345678L;
     private int productId;
     private int warehouseId;
     private int amount;
