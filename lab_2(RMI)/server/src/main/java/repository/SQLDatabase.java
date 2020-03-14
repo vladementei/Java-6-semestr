@@ -1,5 +1,7 @@
 package repository;
 
+import exception.RepositoryException;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -16,7 +18,7 @@ public abstract class SQLDatabase {
     private static Connection connection;
     protected Statement statement;
 
-    public SQLDatabase(String tableName) throws ClassNotFoundException, SQLException {
+    public SQLDatabase(String tableName) throws ClassNotFoundException, RepositoryException {
         this.TABLE_NAME = tableName;
         if (connection == null) {
             try {
@@ -31,11 +33,16 @@ public abstract class SQLDatabase {
                     connectDatabase();
                 } catch (SQLException e) {
                     System.out.println("Create database error");
+                    throw new RepositoryException(e.getMessage(), e.getCause());
                 }
             }
         }
-        this.statement = connection.createStatement();
-        connectTable();
+        try {
+            this.statement = connection.createStatement();
+            connectTable();
+        } catch (SQLException e){
+            throw new RepositoryException(e.getMessage(), e.getCause());
+        }
     }
 
     private void connectDatabase() throws SQLException {
@@ -43,5 +50,5 @@ public abstract class SQLDatabase {
         connection = DriverManager.getConnection(DB_URL + DB_NAME, USER, PASS);
     }
 
-    public abstract void connectTable() throws SQLException;
+    public abstract void connectTable() throws RepositoryException;
 }

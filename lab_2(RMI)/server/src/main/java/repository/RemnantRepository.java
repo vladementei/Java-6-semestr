@@ -3,20 +3,20 @@ package repository;
 import entity.Product;
 import entity.Remnant;
 import entity.Warehouse;
+import exception.RepositoryException;
 
-import java.sql.SQLException;
 import java.util.List;
 
 public interface RemnantRepository {
-    int getProductAmount(Product product) throws SQLException;
+    int getProductAmount(Product product) throws RepositoryException;
 
-    List<Remnant> getAllByProduct(Product product) throws SQLException;
+    List<Remnant> getAllByProduct(Product product) throws RepositoryException;
 
-    List<Remnant> getAllByWarehouse(Warehouse warehouse) throws SQLException;
+    List<Remnant> getAllByWarehouse(Warehouse warehouse) throws RepositoryException;
 
-    Remnant insert(Remnant remnant) throws SQLException;
+    Remnant insert(Remnant remnant) throws RepositoryException;
 
-    Remnant update(Remnant remnant) throws SQLException;
+    Remnant update(Remnant remnant) throws RepositoryException;
 
-    void delete(Remnant remnant) throws SQLException;
+    void delete(Remnant remnant) throws RepositoryException;
 }

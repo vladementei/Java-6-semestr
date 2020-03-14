@@ -3,6 +3,7 @@ package repository;
 import entity.Product;
 import entity.Remnant;
 import entity.Warehouse;
+import exception.RepositoryException;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -16,12 +17,12 @@ public class RemnantRepositorySQL extends SQLDatabase implements RemnantReposito
     private final String WAREHOUSE_ID = "warehouse_id";
     private final String AMOUNT = "amount";
 
-    public RemnantRepositorySQL(String tableName) throws ClassNotFoundException, SQLException {
+    public RemnantRepositorySQL(String tableName) throws ClassNotFoundException, RepositoryException {
         super(tableName);
     }
 
     @Override
-    public void connectTable() throws SQLException {
+    public void connectTable() throws RepositoryException {
         System.out.println("Connecting table " + TABLE_NAME);
         String sql = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME +
                 "(" + PRODUCT_ID + " INTEGER NOT NULL, " +
@@ -30,21 +31,29 @@ public class RemnantRepositorySQL extends SQLDatabase implements RemnantReposito
                 " UNIQUE (" + PRODUCT_ID + ", " + WAREHOUSE_ID + "), " +
                 " foreign key (" + PRODUCT_ID + ") references products(id) on delete cascade, " +
                 " foreign key (" + WAREHOUSE_ID + ") references warehouses (id) on delete cascade)";
-        this.statement.executeUpdate(sql);
-        System.out.println("Table '" + TABLE_NAME + "' connected successfully");
+        try {
+            this.statement.executeUpdate(sql);
+            System.out.println("Table '" + TABLE_NAME + "' connected successfully");
+        } catch (SQLException e){
+            throw new RepositoryException(e.getMessage(), e.getCause());
+        }
     }
 
     @Override
-    public int getProductAmount(Product product) throws SQLException {
+    public int getProductAmount(Product product) throws RepositoryException {
         String sql = "SELECT SUM (" + AMOUNT + ") AS answer FROM " + TABLE_NAME + " WHERE " + PRODUCT_ID + "=" + product.getId();
         System.out.println(sql);
-        ResultSet rs = this.statement.executeQuery(sql);
-        rs.next();
-        return rs.getInt("answer");
+        try (ResultSet rs = this.statement.executeQuery(sql)) {
+            rs.next();
+            return rs.getInt("answer");
+        } catch (SQLException e){
+            throw new RepositoryException(e.getMessage(), e.getCause());
+        }
+
     }
 
     @Override
-    public List<Remnant> getAllByProduct(Product product) throws SQLException {
+    public List<Remnant> getAllByProduct(Product product) throws RepositoryException {
         List<Remnant> list = new ArrayList<>();
         String sql = "SELECT * FROM " + TABLE_NAME + " WHERE " + PRODUCT_ID + " = " + product.getId();
         System.out.println(sql);
@@ -53,12 +62,14 @@ public class RemnantRepositorySQL extends SQLDatabase implements RemnantReposito
                 list.add(new Remnant(product.getId(), resultSet.getInt(WAREHOUSE_ID), resultSet.getInt(AMOUNT)));
 
             }
+        } catch (SQLException e){
+            throw new RepositoryException(e.getMessage(), e.getCause());
         }
         return list;
     }
 
     @Override
-    public List<Remnant> getAllByWarehouse(Warehouse warehouse) throws SQLException {
+    public List<Remnant> getAllByWarehouse(Warehouse warehouse) throws RepositoryException {
         List<Remnant> list = new ArrayList<>();
         String sql = "SELECT * FROM " + TABLE_NAME + " WHERE " + WAREHOUSE_ID + " = " + warehouse.getId();
         System.out.println(sql);
@@ -66,32 +77,46 @@ public class RemnantRepositorySQL extends SQLDatabase implements RemnantReposito
             while (resultSet.next()) {
                 list.add(new Remnant(resultSet.getInt(PRODUCT_ID), warehouse.getId(), resultSet.getInt(AMOUNT)));
             }
+        } catch (SQLException e){
+            throw new RepositoryException(e.getMessage(), e.getCause());
         }
         return list;
     }
 
     @Override
-    public Remnant insert(Remnant remnant) throws SQLException {
+    public Remnant insert(Remnant remnant) throws RepositoryException {
         String sql = String.format(Locale.US, "INSERT INTO " + TABLE_NAME + " (" + PRODUCT_ID + ", " + WAREHOUSE_ID + " , " + AMOUNT +
                 ") VALUES ('%d', '%d', '%d')", remnant.getProductId(), remnant.getWarehouseId(), remnant.getAmount());
         System.out.println(sql);
-        this.statement.executeUpdate(sql);
+        try {
+            this.statement.executeUpdate(sql);
+        } catch (SQLException e){
+            throw new RepositoryException(e.getMessage(), e.getCause());
+        }
         return remnant;
     }
 
     @Override
-    public Remnant update(Remnant remnant) throws SQLException {
+    public Remnant update(Remnant remnant) throws RepositoryException {
         String sql = String.format(Locale.US, "UPDATE " + TABLE_NAME + " SET " + AMOUNT + " = '%d' WHERE " + PRODUCT_ID + "=" + remnant.getProductId() +
                 " AND " + WAREHOUSE_ID + "=" + remnant.getWarehouseId(), remnant.getAmount());
         System.out.println(sql);
-        this.statement.executeUpdate(sql);
+        try {
+            this.statement.executeUpdate(sql);
+        } catch (SQLException e){
+            throw new RepositoryException(e.getMessage(), e.getCause());
+        }
         return remnant;
     }
 
     @Override
-    public void delete(Remnant remnant) throws SQLException {
+    public void delete(Remnant remnant) throws RepositoryException {
         String sql = "DELETE FROM " + TABLE_NAME + " WHERE " + PRODUCT_ID + "=" + remnant.getProductId() + " AND " + WAREHOUSE_ID + "=" + remnant.getWarehouseId();
         System.out.println(sql);
-        this.statement.execute(sql);
+        try {
+            this.statement.execute(sql);
+        } catch (SQLException e){
+            throw new RepositoryException(e.getMessage(), e.getCause());
+        }
     }
 }

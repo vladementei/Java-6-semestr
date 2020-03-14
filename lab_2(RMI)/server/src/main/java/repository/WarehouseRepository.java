@@ -1,18 +1,18 @@
 package repository;
 
 import entity.Warehouse;
+import exception.RepositoryException;
 
-import java.sql.SQLException;
 import java.util.List;
 
 public interface WarehouseRepository {
-    Warehouse get(int id) throws SQLException;
+    Warehouse get(int id) throws RepositoryException;
 
-    List<Warehouse> getALL() throws SQLException;
+    List<Warehouse> getALL() throws RepositoryException;
 
-    Warehouse insert(Warehouse warehouse) throws SQLException;
+    Warehouse insert(Warehouse warehouse) throws RepositoryException;
 
-    Warehouse update(Warehouse warehouse) throws SQLException;
+    Warehouse update(Warehouse warehouse) throws RepositoryException;
 
-    void delete(int id) throws SQLException;
+    void delete(int id) throws RepositoryException;
 }

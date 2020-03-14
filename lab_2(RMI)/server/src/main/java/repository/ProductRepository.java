@@ -1,18 +1,18 @@
 package repository;
 
 import entity.Product;
+import exception.RepositoryException;
 
-import java.sql.SQLException;
 import java.util.List;
 
 public interface ProductRepository {
-    Product get(int id) throws SQLException;
+    Product get(int id) throws RepositoryException;
 
-    List<Product> getALL() throws SQLException;
+    List<Product> getALL() throws RepositoryException;
 
-    Product insert(Product product) throws SQLException;
+    Product insert(Product product) throws RepositoryException;
 
-    Product update(Product product) throws SQLException;
+    Product update(Product product) throws RepositoryException;
 
-    void delete(int id) throws SQLException;
+    void delete(int id) throws RepositoryException;
 }
