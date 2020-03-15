@@ -14,12 +14,12 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.GridPane;
 import javafx.util.Pair;
-import java.sql.SQLException;
+import service.RemoteServiceController;
+
+import java.rmi.RemoteException;
 import java.util.Optional;
 
 public class WarehouseDialog extends Dialog<Warehouse> {
-
-    //private RemnantService remnantService = RemnantService.getRemnantService();
 
     public WarehouseDialog(Warehouse warehouse, ObservableList<Pair<Product, Integer>> remnants) {
         this.setTitle("Warehouse");
@@ -63,14 +63,14 @@ public class WarehouseDialog extends Dialog<Warehouse> {
                         RemnantDialog dialog = new RemnantDialog(remnant);
                         Remnant updated = dialog.startDialog();
                         if (updated != null && !remnant.equals(updated)){
-//                            try {
-//                                updated = remnantService.update(updated);
-//                                remnants.remove(selectedItem);
-//                                remnants.add(new Pair<>(selectedItem.getKey(), updated.getAmount()));
-//                            } catch (SQLException e) {
-//                                e.printStackTrace();
-//                                Dialogs.showErrorDialog(e.getMessage());
-//                            }
+                            try {
+                                updated = RemoteServiceController.getService().update(updated);
+                                remnants.remove(selectedItem);
+                                remnants.add(new Pair<>(selectedItem.getKey(), updated.getAmount()));
+                            } catch (RemoteException e) {
+                                e.printStackTrace();
+                                Dialogs.showErrorDialog(e.getMessage());
+                            }
                         }
                     }
                 }
@@ -80,13 +80,14 @@ public class WarehouseDialog extends Dialog<Warehouse> {
                 if(event.getCode() == KeyCode.DELETE){
                     Pair<Product, Integer> selectedItem = listView.getSelectionModel().getSelectedItem();
                     if (selectedItem != null) {
-//                        try {
-//                            remnantService.delete(new Remnant(selectedItem.getKey().getId(), warehouse.getId(), selectedItem.getValue()));
-//                            remnants.remove(selectedItem);
-//                        } catch (SQLException e) {
-//                            e.printStackTrace();
-//                            Dialogs.showErrorDialog(e.getMessage());
-//                        }
+                        try {
+                            RemoteServiceController.getService()
+                                    .delete(new Remnant(selectedItem.getKey().getId(), warehouse.getId(), selectedItem.getValue()));
+                            remnants.remove(selectedItem);
+                        } catch (RemoteException e) {
+                            e.printStackTrace();
+                            Dialogs.showErrorDialog(e.getMessage());
+                        }
                     }
                 }
             });

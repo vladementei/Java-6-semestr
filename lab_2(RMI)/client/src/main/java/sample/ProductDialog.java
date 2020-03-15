@@ -5,14 +5,13 @@ import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
+import service.RemoteServiceController;
 
-import java.sql.SQLException;
+import java.rmi.RemoteException;
 import java.util.Optional;
 
 
 public class ProductDialog extends Dialog<Product> {
-
-    //private RemnantService remnantService = RemnantService.getRemnantService();
 
     public ProductDialog(Product product) {
         this.setTitle("Product");
@@ -39,13 +38,13 @@ public class ProductDialog extends Dialog<Product> {
         grid.add(description, 1, 1);
 
         if(product != null) {
-//            try {
-//                grid.add(new Label("Total amount: "), 0 , 2);
-//                grid.add(new Label(String.valueOf(remnantService.getProductAmount(product))), 1, 2);
-//            } catch (SQLException e) {
-//                e.printStackTrace();
-//                Dialogs.showErrorDialog(e.getMessage());
-//            }
+            try {
+                grid.add(new Label("Total amount: "), 0 , 2);
+                grid.add(new Label(String.valueOf(RemoteServiceController.getService().getProductAmount(product))), 1, 2);
+            } catch (RemoteException e) {
+                e.printStackTrace();
+                Dialogs.showErrorDialog(e.getMessage());
+            }
         }
 
         Node addButton = this.getDialogPane().lookupButton(saveButtonType);

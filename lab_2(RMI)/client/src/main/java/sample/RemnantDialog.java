@@ -5,14 +5,12 @@ import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
+import service.RemoteServiceController;
 
-import java.sql.SQLException;
+import java.rmi.RemoteException;
 import java.util.Optional;
 
 public class RemnantDialog extends Dialog<Remnant> {
-
-    //private ProductService productService = ProductService.getProductService();
-    //private WarehouseService warehouseService = WarehouseService.getWarehouseService();
 
     public RemnantDialog(Remnant remnant) {
         this.setTitle("Remnant");
@@ -32,18 +30,18 @@ public class RemnantDialog extends Dialog<Remnant> {
 
         String productLabel = String.valueOf(remnant.getProductId());
         String warehouseLabel = String.valueOf(remnant.getWarehouseId());
-//        try {
-//            productLabel = productService.getProductById(remnant.getProductId()).toString();
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//            Dialogs.showErrorDialog(e.getMessage());
-//        }
-//        try {
-//            warehouseLabel = warehouseService.getWarehouseById(remnant.getWarehouseId()).toString();
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//            Dialogs.showErrorDialog(e.getMessage());
-//        }
+        try {
+            productLabel = RemoteServiceController.getService().getProductById(remnant.getProductId()).toString();
+        } catch (RemoteException e) {
+            e.printStackTrace();
+            Dialogs.showErrorDialog(e.getMessage());
+        }
+        try {
+            warehouseLabel = RemoteServiceController.getService().getWarehouseById(remnant.getWarehouseId()).toString();
+        } catch (RemoteException e) {
+            e.printStackTrace();
+            Dialogs.showErrorDialog(e.getMessage());
+        }
 
         grid.add(new Label("Product:"), 0, 0);
         grid.add(new Label(productLabel), 1, 0);
