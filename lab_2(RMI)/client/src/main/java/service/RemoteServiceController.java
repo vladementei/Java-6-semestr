@@ -24,7 +24,7 @@ public class RemoteServiceController {
             Context context = new InitialContext();
             remoteService = (RemoteService)context.lookup(url);
         } catch (NamingException e) {
-            throw new RemoteException(e.getExplanation(), e.getCause());
+            throw new RemoteException(e.getMessage(), e.fillInStackTrace());
         }
     }
 }

@@ -11,6 +11,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.util.Pair;
+import service.EndPointsConfiguration;
 import service.RemoteServiceController;
 
 import java.net.URL;
@@ -32,7 +33,7 @@ public class Controller implements Initializable {
         productsObservableList = FXCollections.observableArrayList();
         warehousesObservableList = FXCollections.observableArrayList();
         try {
-            RemoteServiceController.setRemoteService("rmi://localhost:8080/sql-server");
+            RemoteServiceController.setRemoteService(EndPointsConfiguration.SQL_ENDPOINT);
             try {
                 productsObservableList.addAll(RemoteServiceController.getService().getALLProducts());
             }catch (RemoteException e) {
@@ -182,4 +183,30 @@ public class Controller implements Initializable {
         }
     }
 
+    public void connectSQLEndPoint(ActionEvent event) {
+        try {
+            RemoteServiceController.setRemoteService(EndPointsConfiguration.SQL_ENDPOINT);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+            Dialogs.showErrorDialog(e.getMessage());
+        }
+    }
+
+    public void connectJSONEndPoint(ActionEvent event) {
+        try {
+            RemoteServiceController.setRemoteService(EndPointsConfiguration.JSON_ENDPOINT);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+            Dialogs.showErrorDialog(e.getMessage());
+        }
+    }
+
+    public void connectXMLEndPoint(ActionEvent event) {
+        try {
+            RemoteServiceController.setRemoteService(EndPointsConfiguration.XML_ENDPOINT);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+            Dialogs.showErrorDialog(e.getMessage());
+        }
+    }
 }

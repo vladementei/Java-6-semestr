@@ -31,6 +31,14 @@
                         <MenuItem fx:id="menuAddRemnant" mnemonicParsing="false" onAction="#addRemnant" text="Add Remnant" />
                     </items>
                 </Menu>
+
+                <Menu mnemonicParsing="false" text="Data Base">
+                    <items>
+                        <MenuItem mnemonicParsing="false" onAction="#connectSQLEndPoint" text="Use SQL DB" />
+                        <MenuItem mnemonicParsing="false" onAction="#connectJSONEndPoint" text="Use JSON DB" />
+                        <MenuItem mnemonicParsing="false" onAction="#connectXMLEndPoint" text="Use XML DB" />
+                    </items>
+                </Menu>
             </menus>
         </MenuBar>
     </children>
