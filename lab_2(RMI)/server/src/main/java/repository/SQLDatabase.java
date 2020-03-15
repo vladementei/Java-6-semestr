@@ -33,7 +33,7 @@ public abstract class SQLDatabase {
                     connectDatabase();
                 } catch (SQLException e) {
                     System.out.println("Create database error");
-                    throw new RepositoryException(e.getMessage(), e.getCause());
+                    throw new RepositoryException(e.getMessage(), e.fillInStackTrace());
                 }
             }
         }
@@ -41,7 +41,7 @@ public abstract class SQLDatabase {
             this.statement = connection.createStatement();
             connectTable();
         } catch (SQLException e){
-            throw new RepositoryException(e.getMessage(), e.getCause());
+            throw new RepositoryException(e.getMessage(), e.fillInStackTrace());
         }
     }
 

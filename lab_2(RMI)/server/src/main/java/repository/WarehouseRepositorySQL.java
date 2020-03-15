@@ -31,7 +31,7 @@ public class WarehouseRepositorySQL extends SQLDatabase implements WarehouseRepo
             this.statement.executeUpdate(sql);
             System.out.println("Table '" + TABLE_NAME + "' connected successfully");
         } catch (SQLException e){
-            throw new RepositoryException(e.getMessage(), e.getCause());
+            throw new RepositoryException(e.getMessage(), e.fillInStackTrace());
         }
     }
 
@@ -45,7 +45,7 @@ public class WarehouseRepositorySQL extends SQLDatabase implements WarehouseRepo
                 warehouse = new Warehouse(resultSet.getInt(ID), resultSet.getString(TITLE), resultSet.getString(LOCATION));
             }
         } catch (SQLException e){
-            throw new RepositoryException(e.getMessage(), e.getCause());
+            throw new RepositoryException(e.getMessage(), e.fillInStackTrace());
         }
         return warehouse;
     }
@@ -60,7 +60,7 @@ public class WarehouseRepositorySQL extends SQLDatabase implements WarehouseRepo
                 products.add(new Warehouse(resultSet.getInt(ID), resultSet.getString(TITLE), resultSet.getString(LOCATION)));
             }
         } catch (SQLException e){
-            throw new RepositoryException(e.getMessage(), e.getCause());
+            throw new RepositoryException(e.getMessage(), e.fillInStackTrace());
         }
         return products;
     }
@@ -75,7 +75,7 @@ public class WarehouseRepositorySQL extends SQLDatabase implements WarehouseRepo
             warehouse.setId(resultSet.getInt(ID)); //warehouse = get(resultSet.getInt("id"))
             return warehouse;
         } catch (SQLException e){
-            throw new RepositoryException(e.getMessage(), e.getCause());
+            throw new RepositoryException(e.getMessage(), e.fillInStackTrace());
         }
     }
 
@@ -88,7 +88,7 @@ public class WarehouseRepositorySQL extends SQLDatabase implements WarehouseRepo
             this.statement.executeUpdate(sql);
             //warehouse = get(product.getId())
         } catch (SQLException e){
-            throw new RepositoryException(e.getMessage(), e.getCause());
+            throw new RepositoryException(e.getMessage(), e.fillInStackTrace());
         }
         return warehouse;
     }
@@ -100,7 +100,7 @@ public class WarehouseRepositorySQL extends SQLDatabase implements WarehouseRepo
         try {
             this.statement.execute(sql);
         } catch (SQLException e){
-            throw new RepositoryException(e.getMessage(), e.getCause());
+            throw new RepositoryException(e.getMessage(), e.fillInStackTrace());
         }
     }
 }

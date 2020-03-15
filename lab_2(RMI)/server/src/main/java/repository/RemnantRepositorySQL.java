@@ -35,7 +35,7 @@ public class RemnantRepositorySQL extends SQLDatabase implements RemnantReposito
             this.statement.executeUpdate(sql);
             System.out.println("Table '" + TABLE_NAME + "' connected successfully");
         } catch (SQLException e){
-            throw new RepositoryException(e.getMessage(), e.getCause());
+            throw new RepositoryException(e.getMessage(), e.fillInStackTrace());
         }
     }
 
@@ -47,7 +47,7 @@ public class RemnantRepositorySQL extends SQLDatabase implements RemnantReposito
             rs.next();
             return rs.getInt("answer");
         } catch (SQLException e){
-            throw new RepositoryException(e.getMessage(), e.getCause());
+            throw new RepositoryException(e.getMessage(), e.fillInStackTrace());
         }
 
     }
@@ -63,7 +63,7 @@ public class RemnantRepositorySQL extends SQLDatabase implements RemnantReposito
 
             }
         } catch (SQLException e){
-            throw new RepositoryException(e.getMessage(), e.getCause());
+            throw new RepositoryException(e.getMessage(), e.fillInStackTrace());
         }
         return list;
     }
@@ -78,7 +78,7 @@ public class RemnantRepositorySQL extends SQLDatabase implements RemnantReposito
                 list.add(new Remnant(resultSet.getInt(PRODUCT_ID), warehouse.getId(), resultSet.getInt(AMOUNT)));
             }
         } catch (SQLException e){
-            throw new RepositoryException(e.getMessage(), e.getCause());
+            throw new RepositoryException(e.getMessage(), e.fillInStackTrace());
         }
         return list;
     }
@@ -91,7 +91,7 @@ public class RemnantRepositorySQL extends SQLDatabase implements RemnantReposito
         try {
             this.statement.executeUpdate(sql);
         } catch (SQLException e){
-            throw new RepositoryException(e.getMessage(), e.getCause());
+            throw new RepositoryException(e.getMessage(), e.fillInStackTrace());
         }
         return remnant;
     }
@@ -104,7 +104,7 @@ public class RemnantRepositorySQL extends SQLDatabase implements RemnantReposito
         try {
             this.statement.executeUpdate(sql);
         } catch (SQLException e){
-            throw new RepositoryException(e.getMessage(), e.getCause());
+            throw new RepositoryException(e.getMessage(), e.fillInStackTrace());
         }
         return remnant;
     }
@@ -116,7 +116,7 @@ public class RemnantRepositorySQL extends SQLDatabase implements RemnantReposito
         try {
             this.statement.execute(sql);
         } catch (SQLException e){
-            throw new RepositoryException(e.getMessage(), e.getCause());
+            throw new RepositoryException(e.getMessage(), e.fillInStackTrace());
         }
     }
 }

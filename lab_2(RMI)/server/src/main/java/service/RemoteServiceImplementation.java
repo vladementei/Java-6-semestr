@@ -29,7 +29,7 @@ public class RemoteServiceImplementation extends UnicastRemoteObject implements 
         try {
             return this.productRepository.get(id);
         } catch (RepositoryException e) {
-            throw new RemoteException(e.getMessage(), e.getCause());
+            throw new RemoteException(e.getMessage());
         }
     }
 
@@ -38,7 +38,7 @@ public class RemoteServiceImplementation extends UnicastRemoteObject implements 
         try {
             return this.productRepository.getALL();
         } catch (RepositoryException e) {
-            throw new RemoteException(e.getMessage(), e.getCause());
+            throw new RemoteException(e.getMessage());
         }
     }
 
@@ -47,7 +47,7 @@ public class RemoteServiceImplementation extends UnicastRemoteObject implements 
         try {
             return this.productRepository.insert(product);
         } catch (RepositoryException e) {
-            throw new RemoteException(e.getMessage(), e.getCause());
+            throw new RemoteException(e.getMessage());
         }
     }
 
@@ -56,7 +56,7 @@ public class RemoteServiceImplementation extends UnicastRemoteObject implements 
         try {
             return this.productRepository.update(product);
         } catch (RepositoryException e) {
-            throw new RemoteException(e.getMessage(), e.getCause());
+            throw new RemoteException(e.getMessage());
         }
     }
 
@@ -65,7 +65,7 @@ public class RemoteServiceImplementation extends UnicastRemoteObject implements 
         try {
             this.productRepository.delete(product.getId());
         } catch (RepositoryException e) {
-            throw new RemoteException(e.getMessage(), e.getCause());
+            throw new RemoteException(e.getMessage());
         }
     }
 
@@ -74,7 +74,7 @@ public class RemoteServiceImplementation extends UnicastRemoteObject implements 
         try {
             return this.warehouseRepository.get(id);
         } catch (RepositoryException e) {
-            throw new RemoteException(e.getMessage(), e.getCause());
+            throw new RemoteException(e.getMessage());
         }
     }
 
@@ -83,7 +83,7 @@ public class RemoteServiceImplementation extends UnicastRemoteObject implements 
         try {
             return this.warehouseRepository.getALL();
         } catch (RepositoryException e) {
-            throw new RemoteException(e.getMessage(), e.getCause());
+            throw new RemoteException(e.getMessage());
         }
     }
 
@@ -92,7 +92,7 @@ public class RemoteServiceImplementation extends UnicastRemoteObject implements 
         try {
             return this.warehouseRepository.insert(warehouse);
         } catch (RepositoryException e) {
-            throw new RemoteException(e.getMessage(), e.getCause());
+            throw new RemoteException(e.getMessage());
         }
     }
 
@@ -101,7 +101,7 @@ public class RemoteServiceImplementation extends UnicastRemoteObject implements 
         try {
             return this.warehouseRepository.update(warehouse);
         } catch (RepositoryException e) {
-            throw new RemoteException(e.getMessage(), e.getCause());
+            throw new RemoteException(e.getMessage());
         }
     }
 
@@ -110,7 +110,7 @@ public class RemoteServiceImplementation extends UnicastRemoteObject implements 
         try {
             this.warehouseRepository.delete(warehouse.getId());
         } catch (RepositoryException e) {
-            throw new RemoteException(e.getMessage(), e.getCause());
+            throw new RemoteException(e.getMessage());
         }
     }
 
@@ -119,7 +119,7 @@ public class RemoteServiceImplementation extends UnicastRemoteObject implements 
         try {
             return this.remnantRepository.getProductAmount(product);
         } catch (RepositoryException e) {
-            throw new RemoteException(e.getMessage(), e.getCause());
+            throw new RemoteException(e.getMessage());
         }
     }
 
@@ -128,7 +128,7 @@ public class RemoteServiceImplementation extends UnicastRemoteObject implements 
         try {
             return this.remnantRepository.getAllByProduct(product);
         } catch (RepositoryException e) {
-            throw new RemoteException(e.getMessage(), e.getCause());
+            throw new RemoteException(e.getMessage());
         }
     }
 
@@ -137,7 +137,7 @@ public class RemoteServiceImplementation extends UnicastRemoteObject implements 
         try {
             return this.remnantRepository.getAllByWarehouse(warehouse);
         } catch (RepositoryException e) {
-            throw new RemoteException(e.getMessage(), e.getCause());
+            throw new RemoteException(e.getMessage());
         }
     }
 
@@ -146,7 +146,7 @@ public class RemoteServiceImplementation extends UnicastRemoteObject implements 
         try {
             return this.remnantRepository.insert(remnant);
         } catch (RepositoryException e) {
-            throw new RemoteException(e.getMessage(), e.getCause());
+            throw new RemoteException(e.getMessage());
         }
     }
 
@@ -155,7 +155,7 @@ public class RemoteServiceImplementation extends UnicastRemoteObject implements 
         try {
             return this.remnantRepository.update(remnant);
         } catch (RepositoryException e) {
-            throw new RemoteException(e.getMessage(), e.getCause());
+            throw new RemoteException(e.getMessage());
         }
     }
 
@@ -164,7 +164,7 @@ public class RemoteServiceImplementation extends UnicastRemoteObject implements 
         try {
             this.remnantRepository.delete(remnant);
         } catch (RepositoryException e) {
-            throw new RemoteException(e.getMessage(), e.getCause());
+            throw new RemoteException(e.getMessage());
         }
     }
 }

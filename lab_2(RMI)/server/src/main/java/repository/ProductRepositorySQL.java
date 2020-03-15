@@ -30,7 +30,7 @@ public class ProductRepositorySQL extends SQLDatabase implements ProductReposito
             this.statement.executeUpdate(sql);
             System.out.println("Table '" + TABLE_NAME + "' connected successfully");
         } catch (SQLException e){
-            throw new RepositoryException(e.getMessage(), e.getCause());
+            throw new RepositoryException(e.getMessage(), e.fillInStackTrace());
         }
     }
 
@@ -44,7 +44,7 @@ public class ProductRepositorySQL extends SQLDatabase implements ProductReposito
                 product = new Product(resultSet.getInt(ID), resultSet.getString(NAME), resultSet.getString(DESCRIPTION));
             }
         } catch (SQLException e){
-            throw new RepositoryException(e.getMessage(), e.getCause());
+            throw new RepositoryException(e.getMessage(), e.fillInStackTrace());
         }
         return product;
     }
@@ -59,7 +59,7 @@ public class ProductRepositorySQL extends SQLDatabase implements ProductReposito
                 products.add(new Product(resultSet.getInt(ID), resultSet.getString(NAME), resultSet.getString(DESCRIPTION)));
             }
         } catch (SQLException e){
-            throw new RepositoryException(e.getMessage(), e.getCause());
+            throw new RepositoryException(e.getMessage(), e.fillInStackTrace());
         }
         return products;
     }
@@ -75,7 +75,7 @@ public class ProductRepositorySQL extends SQLDatabase implements ProductReposito
             resultSet.next();
             product.setId(resultSet.getInt(ID)); //product = get(resultSet.getInt("id"))
         } catch (SQLException e){
-            throw new RepositoryException(e.getMessage(), e.getCause());
+            throw new RepositoryException(e.getMessage(), e.fillInStackTrace());
         }
         return product;
     }
@@ -90,7 +90,7 @@ public class ProductRepositorySQL extends SQLDatabase implements ProductReposito
             this.statement.executeUpdate(sql);
             //product = get(product.getId())
         } catch (SQLException e){
-            throw new RepositoryException(e.getMessage(), e.getCause());
+            throw new RepositoryException(e.getMessage(), e.fillInStackTrace());
         }
         return product;
     }
@@ -102,7 +102,7 @@ public class ProductRepositorySQL extends SQLDatabase implements ProductReposito
         try {
             this.statement.execute(sql);
         } catch (SQLException e){
-            throw new RepositoryException(e.getMessage(), e.getCause());
+            throw new RepositoryException(e.getMessage(), e.fillInStackTrace());
         }
     }
 }
