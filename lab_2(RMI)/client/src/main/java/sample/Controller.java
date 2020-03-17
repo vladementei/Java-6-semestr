@@ -33,7 +33,7 @@ public class Controller implements Initializable {
         productsObservableList = FXCollections.observableArrayList();
         warehousesObservableList = FXCollections.observableArrayList();
         try {
-            RemoteServiceController.setRemoteService(EndPointsConfiguration.SQL_ENDPOINT);
+            RemoteServiceController.setRemoteService(EndPointsConfiguration.getInstance().SQL_ENDPOINT);
             try {
                 productsObservableList.addAll(RemoteServiceController.getService().getALLProducts());
             }catch (RemoteException e) {
@@ -185,7 +185,7 @@ public class Controller implements Initializable {
 
     public void connectSQLEndPoint(ActionEvent event) {
         try {
-            RemoteServiceController.setRemoteService(EndPointsConfiguration.SQL_ENDPOINT);
+            RemoteServiceController.setRemoteService(EndPointsConfiguration.getInstance().SQL_ENDPOINT);
         } catch (RemoteException e) {
             e.printStackTrace();
             Dialogs.showErrorDialog(e.getMessage());
@@ -194,7 +194,7 @@ public class Controller implements Initializable {
 
     public void connectJSONEndPoint(ActionEvent event) {
         try {
-            RemoteServiceController.setRemoteService(EndPointsConfiguration.JSON_ENDPOINT);
+            RemoteServiceController.setRemoteService(EndPointsConfiguration.getInstance().JSON_ENDPOINT);
         } catch (RemoteException e) {
             e.printStackTrace();
             Dialogs.showErrorDialog(e.getMessage());
@@ -203,7 +203,7 @@ public class Controller implements Initializable {
 
     public void connectXMLEndPoint(ActionEvent event) {
         try {
-            RemoteServiceController.setRemoteService(EndPointsConfiguration.XML_ENDPOINT);
+            RemoteServiceController.setRemoteService(EndPointsConfiguration.getInstance().XML_ENDPOINT);
         } catch (RemoteException e) {
             e.printStackTrace();
             Dialogs.showErrorDialog(e.getMessage());

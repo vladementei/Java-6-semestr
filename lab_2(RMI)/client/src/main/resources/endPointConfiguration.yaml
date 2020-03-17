@@ -1,0 +1,3 @@
+SQL_ENDPOINT: rmi://0.tcp.ngrok.io:13297/sql-server
+JSON_ENDPOINT: rmi://0.tcp.ngrok.io:13297/json-server
+XML_ENDPOINT: rmi://0.tcp.ngrok.io:13297/xml-server
