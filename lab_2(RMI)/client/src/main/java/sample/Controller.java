@@ -29,19 +29,25 @@ public class Controller implements Initializable {
     private ObservableList<Product> productsObservableList;
     private ObservableList<Warehouse> warehousesObservableList;
 
+    private void readAllDB() throws RemoteException{
+        try {
+            productsObservableList.clear();
+            productsObservableList.addAll(RemoteServiceController.getService().getALLProducts());
+        }catch (RemoteException e) {
+            e.printStackTrace();
+            Dialogs.showErrorDialog(e.getMessage());
+        } finally {
+            warehousesObservableList.clear();
+            warehousesObservableList.addAll(RemoteServiceController.getService().getALLWarehouses());
+        }
+    }
+
     public Controller()  {
         productsObservableList = FXCollections.observableArrayList();
         warehousesObservableList = FXCollections.observableArrayList();
         try {
             RemoteServiceController.setRemoteService(EndPointsConfiguration.getInstance().SQL_ENDPOINT);
-            try {
-                productsObservableList.addAll(RemoteServiceController.getService().getALLProducts());
-            }catch (RemoteException e) {
-                e.printStackTrace();
-                Dialogs.showErrorDialog(e.getMessage());
-            } finally {
-                warehousesObservableList.addAll(RemoteServiceController.getService().getALLWarehouses());
-            }
+            readAllDB();
         } catch (RemoteException e) {
             e.printStackTrace();
             Dialogs.showErrorDialog(e.getMessage());
@@ -195,6 +201,7 @@ public class Controller implements Initializable {
     public void connectJSONEndPoint(ActionEvent event) {
         try {
             RemoteServiceController.setRemoteService(EndPointsConfiguration.getInstance().JSON_ENDPOINT);
+            readAllDB();
         } catch (RemoteException e) {
             e.printStackTrace();
             Dialogs.showErrorDialog(e.getMessage());
@@ -204,6 +211,7 @@ public class Controller implements Initializable {
     public void connectXMLEndPoint(ActionEvent event) {
         try {
             RemoteServiceController.setRemoteService(EndPointsConfiguration.getInstance().XML_ENDPOINT);
+            readAllDB();
         } catch (RemoteException e) {
             e.printStackTrace();
             Dialogs.showErrorDialog(e.getMessage());
