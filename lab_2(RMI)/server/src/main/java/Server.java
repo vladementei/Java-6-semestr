@@ -1,7 +1,5 @@
 import exception.RepositoryException;
-import repository.ProductRepositorySQL;
-import repository.RemnantRepositorySQL;
-import repository.WarehouseRepositorySQL;
+import repository.*;
 import service.RemoteService;
 import service.RemoteServiceImplementation;
 
@@ -17,6 +15,11 @@ public class Server {
             RemoteService sqlService = new RemoteServiceImplementation(new ProductRepositorySQL("products"),
                     new WarehouseRepositorySQL("warehouses"), new RemnantRepositorySQL("product_warehouse"));
             context.rebind("rmi://localhost:8080/sql-server", sqlService);
+
+            RemnantRepository remnantRepositoryJSON = new RemnantRepositoryJSON("remnants");
+            RemoteService jsonService = new RemoteServiceImplementation(new ProductRepositoryJSON("products", remnantRepositoryJSON),
+                    new WarehouseRepositoryJSON("warehouses", remnantRepositoryJSON), remnantRepositoryJSON);
+            context.rebind("rmi://localhost:8080/json-server", jsonService);
         } catch (RepositoryException | ClassNotFoundException e) {
             throw new RemoteException(e.getMessage(), e.getCause());
         }
