@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<products>
+    <product id="1">
+        <name>burger</name>
+        <description>tasty</description>
+    </product>
+    <product id="3">
+        <name>pencil</name>
+        <description>gray</description>
+    </product>
+    <product id="2">
+        <name>pen</name>
+        <description>beautiful!!</description>
+    </product>
+</products>
