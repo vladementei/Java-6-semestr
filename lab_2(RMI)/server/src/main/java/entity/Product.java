@@ -1,13 +1,26 @@
 package entity;
 
+import javax.xml.bind.annotation.*;
 import java.io.Serializable;
 import java.util.Objects;
 
+@XmlRootElement(name = "product")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Product implements Serializable {
     private static final long serialVersionUID = 1234L;
+
+    @XmlAttribute
     private int id;
+    @XmlElement
     private String name;
+    @XmlElement
     private String description;
+
+    public Product() {
+        this.id = 0;
+        this.name = "";
+        this.description = "";
+    }
 
     public Product(int id, String name, String description) {
         this.id = id;
