@@ -1,13 +1,26 @@
 package entity;
 
+import javax.xml.bind.annotation.*;
 import java.io.Serializable;
 import java.util.Objects;
 
+@XmlRootElement(name = "remnant")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Remnant implements Serializable {
     private static final long serialVersionUID = 12345678L;
+
+    @XmlAttribute
     private int productId;
+    @XmlAttribute
     private int warehouseId;
+    @XmlElement
     private int amount;
+
+    public Remnant() {
+        this.productId = 0;
+        this.warehouseId = 0;
+        this.amount = 0;
+    }
 
     public Remnant(int productId, int warehouseId, int amount) {
         this.productId = productId;
