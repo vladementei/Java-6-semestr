@@ -20,6 +20,11 @@ public class Server {
             RemoteService jsonService = new RemoteServiceImplementation(new ProductRepositoryJSON("products", remnantRepositoryJSON),
                     new WarehouseRepositoryJSON("warehouses", remnantRepositoryJSON), remnantRepositoryJSON);
             context.rebind("rmi://localhost:8080/json-server", jsonService);
+
+            RemnantRepository remnantRepositoryXML = new RemnantRepositoryXML("remnants");
+            RemoteService xmlService = new RemoteServiceImplementation(new ProductRepositoryXML("products", remnantRepositoryXML),
+                    new WarehouseRepositoryXML("warehouses", remnantRepositoryXML), remnantRepositoryXML);
+            context.rebind("rmi://localhost:8080/xml-server", xmlService);
         } catch (RepositoryException | ClassNotFoundException e) {
             throw new RemoteException(e.getMessage(), e.getCause());
         }
