@@ -1,1 +1,14 @@
-{"warehouse":[{"id":2,"title":"Second","location":"Golubeva 10"},{"id":3,"title":"Main!","location":"Nezavismosti 4"}]}
+{
+  "warehouse": [
+    {
+      "id": 2,
+      "title": "Second",
+      "location": "Golubeva 10"
+    },
+    {
+      "id": 3,
+      "title": "Main!",
+      "location": "Nezavismosti 4"
+    }
+  ]
+}

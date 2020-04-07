@@ -1,1 +1,19 @@
-{"remnant":[{"productId":4,"warehouseId":3,"amount":12}]}
+{
+  "remnant": [
+    {
+      "productId": 4,
+      "warehouseId": 3,
+      "amount": 12
+    },
+    {
+      "productId": 6,
+      "warehouseId": 3,
+      "amount": 100
+    },
+    {
+      "productId": 6,
+      "warehouseId": 2,
+      "amount": 200
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<warehouses>
+    <warehouse id="1">
+        <title>Main</title>
+        <location>Nezavisimosti 4</location>
+    </warehouse>
+    <warehouse id="2">
+        <title>Big</title>
+        <location>Golubeva 1</location>
+    </warehouse>
+</warehouses>
