@@ -11,16 +11,41 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+/**
+ * <b>Implementation of {@link SQLDatabase} for work with {@link Remnant remnants}</b>
+ * @author <h2><i style="color: green;">Uladzislau Dzemiantsei</i></h2>
+ * @version <span style="color: blue;">1.0</span>
+ */
 public class RemnantRepositorySQL extends SQLDatabase implements RemnantRepository {
-
+    /**
+     * column "product_id" name in SQL table (reference to {@link Product product})
+     */
     private final String PRODUCT_ID = "product_id";
+
+    /**
+     * column "warehouse_id" name in SQL table (reference to {@link Warehouse warehouse})
+     */
     private final String WAREHOUSE_ID = "warehouse_id";
+
+    /**
+     * column "amount" name in SQL table
+     */
     private final String AMOUNT = "amount";
 
+    /**
+     * constructor to create repository for specified table
+     * @param tableName name of SQL table
+     * @throws ClassNotFoundException if SQL driver not found
+     * @throws RepositoryException if connection to database or table failed
+     */
     public RemnantRepositorySQL(String tableName) throws ClassNotFoundException, RepositoryException {
         super(tableName);
     }
 
+    /**
+     * implementation of parent method to connect SQL table or create it if not exist
+     * @throws RepositoryException if creation of table failed
+     */
     @Override
     public void connectTable() throws RepositoryException {
         System.out.println("Connecting table " + TABLE_NAME);
@@ -39,6 +64,12 @@ public class RemnantRepositorySQL extends SQLDatabase implements RemnantReposito
         }
     }
 
+    /**
+     * get sum amount of specified {@link Product product} on all warehouses
+     * @param product {@link Product product} to search
+     * @return sum amount
+     * @throws RepositoryException if {@link SQLException} happened
+     */
     @Override
     public int getProductAmount(Product product) throws RepositoryException {
         String sql = "SELECT SUM (" + AMOUNT + ") AS answer FROM " + TABLE_NAME + " WHERE " + PRODUCT_ID + "=" + product.getId();
@@ -52,6 +83,12 @@ public class RemnantRepositorySQL extends SQLDatabase implements RemnantReposito
 
     }
 
+    /**
+     * get all {@link Remnant remnants} from SQL database that has reference to specified {@link Product product}
+     * @param product {@link Product product} to search by
+     * @return list of {@link Remnant remnants}
+     * @throws RepositoryException if {@link SQLException} happened
+     */
     @Override
     public List<Remnant> getAllByProduct(Product product) throws RepositoryException {
         List<Remnant> list = new ArrayList<>();
@@ -68,6 +105,12 @@ public class RemnantRepositorySQL extends SQLDatabase implements RemnantReposito
         return list;
     }
 
+    /**
+     * get all {@link Remnant remnants} from SQL database that has reference to specified {@link Warehouse warehouse}
+     * @param warehouse {@link Warehouse warehouse} to search by
+     * @return list of {@link Remnant remnants}
+     * @throws RepositoryException if {@link SQLException} happened
+     */
     @Override
     public List<Remnant> getAllByWarehouse(Warehouse warehouse) throws RepositoryException {
         List<Remnant> list = new ArrayList<>();
@@ -83,6 +126,12 @@ public class RemnantRepositorySQL extends SQLDatabase implements RemnantReposito
         return list;
     }
 
+    /**
+     * add new {@link Remnant remnant} to SQL database
+     * @param remnant instance of {@link Remnant remnant} wishing to insert
+     * @return instance of saved {@link Remnant remnant} from SQL database
+     * @throws RepositoryException if {@link SQLException} happened
+     */
     @Override
     public Remnant insert(Remnant remnant) throws RepositoryException {
         String sql = String.format(Locale.US, "INSERT INTO " + TABLE_NAME + " (" + PRODUCT_ID + ", " + WAREHOUSE_ID + " , " + AMOUNT +
@@ -96,6 +145,12 @@ public class RemnantRepositorySQL extends SQLDatabase implements RemnantReposito
         return remnant;
     }
 
+    /**
+     * update {@link Remnant remnant} in SQL database
+     * @param remnant instance of {@link Remnant remnant} wishing to update
+     * @return instance of updated {@link Remnant remnant} from SQL database
+     * @throws RepositoryException if {@link SQLException} happened
+     */
     @Override
     public Remnant update(Remnant remnant) throws RepositoryException {
         String sql = String.format(Locale.US, "UPDATE " + TABLE_NAME + " SET " + AMOUNT + " = '%d' WHERE " + PRODUCT_ID + "=" + remnant.getProductId() +
@@ -109,6 +164,11 @@ public class RemnantRepositorySQL extends SQLDatabase implements RemnantReposito
         return remnant;
     }
 
+    /**
+     * delete {@link Remnant remnant} from SQL database
+     * @param remnant instance of {@link Remnant remnant} wishing to delete
+     * @throws RepositoryException if {@link SQLException} happened
+     */
     @Override
     public void delete(Remnant remnant) throws RepositoryException {
         String sql = "DELETE FROM " + TABLE_NAME + " WHERE " + PRODUCT_ID + "=" + remnant.getProductId() + " AND " + WAREHOUSE_ID + "=" + remnant.getWarehouseId();

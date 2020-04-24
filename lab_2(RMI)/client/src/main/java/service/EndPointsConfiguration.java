@@ -6,12 +6,32 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import sample.Dialogs;
 
+/**
+ * <b>Class to read YAML file and configure endpoints of server</b>
+ * @author <h2><i style="color: green;">Uladzislau Dzemiantsei</i></h2>
+ * @version <span style="color: blue;">1.0</span>
+ */
 public class EndPointsConfiguration {
+    /**
+     * singleton instance
+     */
     private static EndPointsConfiguration instance = new EndPointsConfiguration();
+    /**
+     * address of SQL endpoint
+     */
     public final String SQL_ENDPOINT;
+    /**
+     * address of JSON endpoint
+     */
     public final String JSON_ENDPOINT;
+    /**
+     * address of XML endpoint
+     */
     public final String XML_ENDPOINT;
 
+    /**
+     * default constructor to define localhost endpoints if global fail
+     */
     private EndPointsConfiguration() {
     }
 
@@ -37,6 +57,10 @@ public class EndPointsConfiguration {
         }
     }
 
+    /**
+     * getter of singleton
+     * @return instance of singleton
+     */
     public static EndPointsConfiguration getInstance() {
         return instance;
     }

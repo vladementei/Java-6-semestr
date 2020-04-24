@@ -19,8 +19,18 @@ import service.RemoteServiceController;
 import java.rmi.RemoteException;
 import java.util.Optional;
 
+/**
+ * <b>UI dialog to create or update {@link Warehouse warehouse}</b>
+ * @author <h2><i style="color: green;">Uladzislau Dzemiantsei</i></h2>
+ * @version <span style="color: blue;">1.0</span>
+ */
 public class WarehouseDialog extends Dialog<Warehouse> {
 
+    /**
+     * constructor to initialize dialog
+     * @param warehouse warehouse if null, means it is creation dialog, otherwise - update dialog where param is {@link Warehouse warehouse} to update
+     * @param remnants all {@link Remnant remnants} that are available for selected {@link Warehouse warehouse}
+     */
     public WarehouseDialog(Warehouse warehouse, ObservableList<Pair<Product, Integer>> remnants) {
         this.setTitle("Warehouse");
         this.setHeaderText("Fill warehouse information");
@@ -118,6 +128,10 @@ public class WarehouseDialog extends Dialog<Warehouse> {
         });
     }
 
+    /**
+     * Method that runs dialog
+     * @return created or updated {@link Warehouse warehouse} after close
+     */
     public Warehouse startDialog(){
         Optional<Warehouse> result = this.showAndWait();
         return result.orElse(null);

@@ -8,7 +8,22 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import java.rmi.RemoteException;
 
+/**
+ * <b>Main class for Server (create repositories and binding remote services)</b>
+ * @author <h2><i style="color: green;">Uladzislau Dzemiantsei</i></h2>
+ * @version <span style="color: blue;">3.0</span>
+ */
 public class Server {
+    /**
+     * entry point into application
+     * <br>
+     * {@code Context context = new InitialContext();}
+     * <br>
+     * {@code context.rebind("rmi://address/service-name", serviceImplementation);}
+     * @param args command line arguments
+     * @throws RemoteException if error in any repository happened
+     * @throws NamingException if error in binding repository to name happened
+     */
     public static void main(String[] args) throws RemoteException, NamingException {
         try {
             Context context = new InitialContext();

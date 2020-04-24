@@ -11,8 +11,17 @@ import java.rmi.RemoteException;
 import java.util.Optional;
 
 
+/**
+ * <b>UI dialog to create or update {@link Product product}</b>
+ * @author <h2><i style="color: green;">Uladzislau Dzemiantsei</i></h2>
+ * @version <span style="color: blue;">1.0</span>
+ */
 public class ProductDialog extends Dialog<Product> {
 
+    /**
+     * constructor to initialize dialog
+     * @param product if null, means it is creation dialog, otherwise - update dialog where param is {@link Product product} to update
+     */
     public ProductDialog(Product product) {
         this.setTitle("Product");
         this.setHeaderText("Fill product information");
@@ -69,6 +78,10 @@ public class ProductDialog extends Dialog<Product> {
         });
     }
 
+    /**
+     * Method that runs dialog
+     * @return created or updated {@link Product product} after close
+     */
     public Product startDialog(){
         Optional<Product> result = this.showAndWait();
         return result.orElse(null);

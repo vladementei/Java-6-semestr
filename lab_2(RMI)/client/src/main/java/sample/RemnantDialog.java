@@ -10,8 +10,17 @@ import service.RemoteServiceController;
 import java.rmi.RemoteException;
 import java.util.Optional;
 
+/**
+ * <b>UI dialog to create or update {@link Remnant remnant}</b>
+ * @author <h2><i style="color: green;">Uladzislau Dzemiantsei</i></h2>
+ * @version <span style="color: blue;">1.0</span>
+ */
 public class RemnantDialog extends Dialog<Remnant> {
 
+    /**
+     * constructor to initialize dialog
+     * @param remnant if null, means it is creation dialog, otherwise - update dialog where param is {@link Remnant remnant} to update
+     */
     public RemnantDialog(Remnant remnant) {
         this.setTitle("Remnant");
         this.setHeaderText("Fill remnant information");
@@ -70,6 +79,10 @@ public class RemnantDialog extends Dialog<Remnant> {
         });
     }
 
+    /**
+     * Method that runs dialog
+     * @return created or updated {@link Remnant remnant} after close
+     */
     public Remnant startDialog(){
         Optional<Remnant> result = this.showAndWait();
         return result.orElse(null);

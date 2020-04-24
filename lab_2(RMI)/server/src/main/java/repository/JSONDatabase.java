@@ -10,11 +10,31 @@ import exception.RepositoryException;
 
 import java.io.*;
 
+/**
+ * <b>Parent class for all JSON repositories to establish connection with database</b>
+ * @author <h2><i style="color: green;">Uladzislau Dzemiantsei</i></h2>
+ * @version <span style="color: blue;">1.0</span>
+ */
 public abstract class JSONDatabase {
+    /**
+     * name of table for current instance
+     */
     protected String TABLE_NAME;
+
+    /**
+     * instance of JSON file in memory
+     */
     protected DocumentContext document;
+
+    /**
+     * parser to convert JSON file to JAVA object
+     */
     protected Gson parser;
 
+    /**
+     * get json database location (if run jar then return from "if", if run from IntelijIDEA then return from "else")
+     * @return absolute path to database
+     */
     private String getFilePath() {
         if (new File(".").getAbsolutePath().endsWith("target\\.")){
             return new File(".").getAbsoluteFile().getParentFile().getParentFile().getPath() + "\\db\\" + TABLE_NAME + ".json";
@@ -23,6 +43,11 @@ public abstract class JSONDatabase {
         }
     }
 
+    /**
+     * constructor to establish connection with database and convert in to appropriate form
+     * @param tableName name of JSON file with database
+     * @throws RepositoryException if connection throws error
+     */
     public JSONDatabase(String tableName) throws RepositoryException {
         this.TABLE_NAME = tableName;
         parser = new Gson();
@@ -36,6 +61,10 @@ public abstract class JSONDatabase {
         }
     }
 
+    /**
+     * saving current updates from memory to JSON database
+     * @throws RepositoryException if writing to database failed
+     */
     protected void saveToDataBase() throws RepositoryException {
         try (Writer writer = new FileWriter(getFilePath())) {
             writer.write(document.jsonString());

@@ -19,16 +19,38 @@ import java.rmi.RemoteException;
 import java.util.*;
 import java.util.stream.Collectors;
 
+/**
+ * <b>Controller part of MVC hierarchy of UI</b>
+ * @author <h2><i style="color: green;">Uladzislau Dzemiantsei</i></h2>
+ * @version <span style="color: blue;">3.0</span>
+ */
 public class Controller implements Initializable {
 
+    /**
+     * View of all {@link Product products}
+     */
     @FXML
     private ListView<Product> listViewProducts;
+    /**
+     * View of all {@link Warehouse warehouses }
+     */
     @FXML
     private ListView<Warehouse> listViewWarehouses;
 
+    /**
+     * Model for view of all {@link Product products}
+     */
     private ObservableList<Product> productsObservableList;
+
+    /**
+     * Model for view of all {@link Warehouse warehouses}
+     */
     private ObservableList<Warehouse> warehousesObservableList;
 
+    /**
+     * Method is used to clear all previous views of lists and initialize new by calling getAllEntities
+     * @throws RemoteException if getAll from server throws exception
+     */
     private void readAllDB() throws RemoteException{
         try {
             productsObservableList.clear();
@@ -42,6 +64,9 @@ public class Controller implements Initializable {
         }
     }
 
+    /**
+     * Constructor of controller, create models and read default DB - SQL
+     */
     public Controller()  {
         productsObservableList = FXCollections.observableArrayList();
         warehousesObservableList = FXCollections.observableArrayList();
@@ -54,6 +79,11 @@ public class Controller implements Initializable {
         }
     }
 
+    /**
+     * initialize is used to set mouse double click and key delete listeners.
+     * @param location default param, not used
+     * @param resources default param, not used
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         listViewProducts.setItems(productsObservableList);
@@ -142,6 +172,10 @@ public class Controller implements Initializable {
     }
 
 
+    /**
+     * Method call {@link ProductDialog Product dialog} to create new {@link Product product}
+     * @param event contains info about click event
+     */
     public void addProduct(ActionEvent event){
         ProductDialog dialog = new ProductDialog(null);
         Product product = dialog.startDialog();
@@ -156,6 +190,10 @@ public class Controller implements Initializable {
         }
     }
 
+    /**
+     * Method call {@link WarehouseDialog Warehouse dialog} to create new {@link Warehouse warehouse}
+     * @param event contains info about click event
+     */
     public void addWarehouse(ActionEvent event){
         WarehouseDialog dialog = new WarehouseDialog(null, null);
         Warehouse warehouse = dialog.startDialog();
@@ -170,6 +208,11 @@ public class Controller implements Initializable {
         }
     }
 
+    /**
+     * Method call {@link RemnantDialog Remnant dialog} to create new {@link Remnant remnant}
+     * <br> one {@link Product product} and one {@link Warehouse warehouse} must be selected first
+     * @param event contains info about click event
+     */
     public void addRemnant(ActionEvent event){
         Product product = listViewProducts.getSelectionModel().getSelectedItem();
         Warehouse warehouse = listViewWarehouses.getSelectionModel().getSelectedItem();
@@ -189,6 +232,10 @@ public class Controller implements Initializable {
         }
     }
 
+    /**
+     * Switches UI to SQL database
+     * @param event contains info about click event
+     */
     public void connectSQLEndPoint(ActionEvent event) {
         try {
             RemoteServiceController.setRemoteService(EndPointsConfiguration.getInstance().SQL_ENDPOINT);
@@ -198,6 +245,10 @@ public class Controller implements Initializable {
         }
     }
 
+    /**
+     * Switches UI to JSON database
+     * @param event contains info about click event
+     */
     public void connectJSONEndPoint(ActionEvent event) {
         try {
             RemoteServiceController.setRemoteService(EndPointsConfiguration.getInstance().JSON_ENDPOINT);
@@ -208,6 +259,10 @@ public class Controller implements Initializable {
         }
     }
 
+    /**
+     * Switches UI to XML database
+     * @param event contains info about click event
+     */
     public void connectXMLEndPoint(ActionEvent event) {
         try {
             RemoteServiceController.setRemoteService(EndPointsConfiguration.getInstance().XML_ENDPOINT);
