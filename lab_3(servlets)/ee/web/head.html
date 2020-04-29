@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="css/mdb.css" rel="stylesheet">
+    <link href="css/index.css" rel="stylesheet">
+    <script>
+        (function () {
+            'use strict';
+            window.addEventListener('load', function () {
+                var form = document.getElementById('content-form');
+                form.addEventListener('submit', function (event) {
+                    if (form.checkValidity() === false) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                    form.classList.add('was-validated');
+                    console.log(form.checkValidity());
+                }, false);
+            }, false);
+        })();
+    </script>
+
+    <script>
+        function submitForm(page) {
+            var event = new Event('submit');
+            event.initEvent('submit', true, true);
+            console.log(event);
+            document.getElementById('content-form').dispatchEvent(event);
+            var form = document.getElementById('content-form');
+            if (form.checkValidity() === true) {
+                var input = document.createElement('input');
+                input.type = 'hidden';
+                input.name = 'page';
+                input.value = page;
+                form.appendChild(input);
+                form.submit();
+            }
+        }
+    </script>
+</head>
