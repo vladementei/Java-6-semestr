@@ -4,11 +4,20 @@
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
          version="4.0">
     <servlet>
-        <servlet-name>Main</servlet-name>
-        <servlet-class>by.dementei.Main</servlet-class>
+        <servlet-name>MainJSP</servlet-name>
+        <servlet-class>by.dementei.MainJSP</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>Main</servlet-name>
+        <servlet-name>MainJSP</servlet-name>
         <url-pattern>/card-designer</url-pattern>
     </servlet-mapping>
+
+    <welcome-file-list>
+        <welcome-file>/index.jsp</welcome-file>
+    </welcome-file-list>
+
+    <error-page>
+        <error-code>404</error-code>
+        <location>/jsp/error.jsp</location>
+    </error-page>
 </web-app>

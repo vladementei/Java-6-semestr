@@ -1,0 +1,25 @@
+<taglib>
+    <tlib-version>1.0</tlib-version>
+    <jsp-version>2.0</jsp-version>
+    <short-name>card</short-name>
+
+    <tag>
+        <name>card</name>
+        <tag-class>by.dementei.CardTag</tag-class>
+        <body-content>scriptless</body-content>
+
+        <attribute>
+            <name>network</name>
+            <required>true</required>
+            <description>img with card network</description>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+
+        <attribute>
+            <name>design</name>
+            <required>true</required>
+            <description>img with card design</description>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+    </tag>
+</taglib>

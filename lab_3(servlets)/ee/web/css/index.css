@@ -187,3 +187,41 @@ ul.stepper li a {
     background-image: -webkit-gradient(linear, left top, right top, from(khaki), to(darkkhaki));
 }
 
+.error-container {
+    padding: 20px;
+    position: absolute;
+    margin: auto;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 30vw;
+    height: 60vh;
+    min-width: 500px;
+    background-color: white;
+    border-radius: 20px;
+}
+
+.error-container .close {
+    padding: 20px 20px 0 0;
+    font-size: 30px;
+}
+
+.error-container .title {
+    margin-top: 15vh;
+    font-size: 60px;
+    color: black;
+    text-align: center;
+}
+
+.error-container .requested-url {
+    text-align: center;
+    margin-top: 10vh;
+    font-size: 25px;
+}
+
+.error-container .error-message {
+    text-align: center;
+    margin-top: 8vh;
+    font-size: 25px;
+}
