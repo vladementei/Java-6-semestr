@@ -50,7 +50,9 @@
 </div>
 <div class="step-action mt-auto">
     <button type="button" onclick="document.location.href='/main?action=addWarehouse'" class="btn">Add Warehouse</button>
-    <button type="button" onclick='document.location.href=("/main?action=addRemnant&productId="+ getSelectedElementId("products-form")
-    + "&warehouseId="+ getSelectedElementId("warehouses-form"))' class="btn">Add Remnant</button>
+    <c:if test="${not empty warehouses && not empty products}">
+        <button type="button" onclick='document.location.href=("/main?action=addRemnant&productId="+ getSelectedElementId("products-form")
+        + "&warehouseId="+ getSelectedElementId("warehouses-form"))' class="btn">Add Remnant</button>
+    </c:if>
     <button type="button" onclick="document.location.href='/main?action=addProduct'" class="btn">Add Product</button>
 </div>

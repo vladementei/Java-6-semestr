@@ -3,6 +3,7 @@ package by.dementei;
 import by.dementei.entity.Product;
 import by.dementei.entity.Remnant;
 import by.dementei.entity.Warehouse;
+import by.dementei.exception.DatabaseException;
 import by.dementei.service.ProductService;
 import by.dementei.service.RemnantService;
 import by.dementei.service.WarehouseService;
@@ -31,11 +32,6 @@ public class Main extends HttpServlet {
         productService = ProductService.getProductService();
         warehouseService = WarehouseService.getWarehouseService();
         remnantService = RemnantService.getRemnantService();
-        try {
-            System.out.println(warehouseService.getALLWarehouses());
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
     }
 
     @Override
@@ -102,7 +98,7 @@ public class Main extends HttpServlet {
             }
             request.getRequestDispatcher("/").forward(request, response);
         }catch (SQLException e) {
-            e.printStackTrace();
+            throw new DatabaseException(e.getMessage());
         }
     }
 
@@ -110,7 +106,6 @@ public class Main extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String action = request.getParameter("action");
         request.setAttribute("action", action);
-
         try {
             switch (action) {
                 case "addWarehouse":
@@ -134,7 +129,7 @@ public class Main extends HttpServlet {
                     break;
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new DatabaseException(e.getMessage());
         }
         request.setAttribute("action", "");
         doGet(request, response);

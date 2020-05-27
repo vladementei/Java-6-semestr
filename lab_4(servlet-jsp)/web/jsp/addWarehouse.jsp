@@ -37,6 +37,10 @@
             <c:if test="${not empty requestScope.remnants}">
                 <div id="remnants-form">
                     <div class="form-content scrollbar-primary" style="height: 23vh; min-width: 250px;">
+                        <div class="table-header">
+                            <div>Product</div>
+                            <div>Amount</div>
+                        </div>
                         <c:forEach items="${requestScope.remnants}" var="remnant">
                             <div class="table-row" style="grid-template-columns: 1fr 0 30px;"
                                  oncontextmenu="document.location.href='/main?action=deleteRemnant&productId=${remnant.key.id}' + '&id=${warehouse.id}'; return false;">
