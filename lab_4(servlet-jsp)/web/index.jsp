@@ -20,7 +20,7 @@
 </head>
 <body>
 
-<div class="title">Products and warehouses</div>
+<div class="title" onclick="document.location.href='/main'" >Products and warehouses</div>
 
 <div class="row d-flex justify-content-center">
     <div class="col-7">

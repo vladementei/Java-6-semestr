@@ -11,6 +11,7 @@
 <jsp:useBean id = "warehouse" class = "by.dementei.entity.Warehouse"/>
 <jsp:setProperty name="warehouse" property="title" value="${requestScope.title}" />
 <jsp:setProperty name="warehouse" property="location" value="${requestScope.location}" />
+<jsp:setProperty name="warehouse" property="id" value="${requestScope.warehouseId}" />
 
 <div class="step-title">Create Warehouse</div>
 <div class="step-description">Fill Warehouse Information</div>
@@ -33,9 +34,24 @@
                     Please provide warehouse location
                 </div>
             </div>
+            <c:if test="${not empty requestScope.remnants}">
+                <div id="remnants-form">
+                    <div class="form-content scrollbar-primary" style="height: 23vh; min-width: 250px;">
+                        <c:forEach items="${requestScope.remnants}" var="remnant">
+                            <div class="table-row" style="grid-template-columns: 1fr 0 30px;"
+                                 oncontextmenu="document.location.href='/main?action=deleteRemnant&productId=${remnant.key.id}' + '&id=${warehouse.id}'; return false;">
+                                <div class="id">${remnant.key.name}</div>
+                                <div> </div>
+                                <div>${remnant.value}</div>
+                            </div>
+                        </c:forEach>
+                    </div>
+                </div>
+            </c:if>
+
         </div>
         <div class="dialog-action">
-            <button type="button"  onclick="window.history.back()" class="btn">Close</button>
+            <button type="button"  onclick="document.location.href='/main'" class="btn">Close</button>
             <button type="button"  onclick="submitForm('add-warehouse-form', 2)" class="btn">Save</button>
         </div>
     </form>

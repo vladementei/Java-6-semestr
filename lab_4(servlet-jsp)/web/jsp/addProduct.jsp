@@ -33,6 +33,12 @@
                     Please provide product description
                 </div>
             </div>
+            <c:if test="${not empty requestScope.totalAmount}">
+                <div class="form-group">
+                    <label for="remnantWarehouse">Total amount</label>
+                    <span id="remnantWarehouse">${requestScope.totalAmount}</span>
+                </div>
+            </c:if>
         </div>
         <div class="dialog-action">
             <button type="button"  onclick="window.history.back()" class="btn">Close</button>

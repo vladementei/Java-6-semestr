@@ -82,7 +82,23 @@
             }
         });
         document.getElementById('products-form').childNodes[1].childNodes[1].classList.replace('table-row', 'table-row-focus');
-
+    });
+        window.addEventListener("load", function () {
+        document.getElementById('remnants-form').childNodes[1].childNodes.forEach(function (row) {
+            if (row.nodeType === 1) {
+                row.addEventListener("click", function (evt) {
+                    if (!row.classList.contains('table-row-focus')) {
+                        row.classList.replace('table-row', 'table-row-focus');
+                        document.getElementById('remnants-form').childNodes[1].childNodes.forEach(function (change) {
+                            if (change.nodeType === 1 && change.classList.contains('table-row-focus') && change !== row) {
+                                change.classList.replace('table-row-focus', 'table-row');
+                            }
+                        });
+                    }
+                });
+            }
+        });
+        document.getElementById('remnants-form').childNodes[1].childNodes[1].classList.replace('table-row', 'table-row-focus');
 
     });
 
