@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="MDB-Free_4.16.0/css/bootstrap.css" rel="stylesheet">
+    <link href="MDB-Free_4.16.0/css/mdb.css" rel="stylesheet">
+    <link href="index.css" rel="stylesheet">
+    <script>
+        (function () {
+            'use strict';
+            window.addEventListener('load', function () {
+                var form = document.getElementById('content-form');
+                form.addEventListener('submit', function (event) {
+                    if (form.checkValidity() === false) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                    form.classList.add('was-validated');
+                }, false);
+            }, false);
+        })();
+    </script>
+
+    <script>
+        function submitForm() {
+            var event = new Event('submit');
+            event.initEvent('submit', true, true);
+            document.getElementById('content-form').dispatchEvent(event);
+        }
+    </script>
+</head>
+<body>
+
+<div class="title">Card Designer</div>
+
+<div class="row d-flex justify-content-center">
+    <div class="col-8">
+        <ul class="stepper stepper-horizontal">
+            <li class="completed accessible">
+                <a>
+                    <span class="circle">1</span>
+                    <span class="label">Cardholder</span>
+                </a>
+            </li>
+            <li class="active">
+                <a class="scaled-step">
+                    <span class="circle">2</span>
+                    <span class="label">Card network</span>
+                </a>
+            </li>
+            <li class="warning accessible">
+                <a onclick="submitForm()">
+                    <span class="circle">3</span>
+                    <span class="label">Design</span>
+                </a>
+            </li>
+            <li class="warning">
+                <a>
+                    <span class="circle">4</span>
+                    <span class="label">Summary</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+<div class="row d-flex justify-content-center">
+    <div class="col-5">
+        <div class="content d-flex flex-column">
+            <div class="d-flex flex-column">
+                <div class="step-title">Credit Card Networks</div>
+                <div class="step-description">Please choose network for your card</div>
+                <div class="step-form">
+                    <form id="content-form" novalidate>
+                        <div class="form-content scrollbar-primary">
+                            <div class="form-group">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="cardNetworkRadio" id="visa"     value="visa" checked>
+                                    <img src="visa.png">
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="cardNetworkRadio" id="mastercard"      value="mastercard">
+                                    <img src="mastercard.png">
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="cardNetworkRadio" id="maestro"      value="maestro">
+                                    <img src="maestro.png">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="step-action mt-auto">
+                            <button type="button" class="btn">Back</button>
+                            <button type="submit" class="btn">Next</button>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+</body>
+</html>

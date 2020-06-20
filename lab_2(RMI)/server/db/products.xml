@@ -12,4 +12,8 @@
         <name>pen</name>
         <description>beautiful!!</description>
     </product>
+    <product id="4">
+        <name>new product</name>
+        <description>desc</description>
+</product>
 </products>

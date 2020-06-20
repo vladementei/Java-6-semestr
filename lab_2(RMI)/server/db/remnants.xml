@@ -6,4 +6,10 @@
     <remnant productId="1" warehouseId="2">
         <amount>30</amount>
     </remnant>
+    <remnant productId="3" warehouseId="1">
+        <amount>15</amount>
+    </remnant>
+    <remnant productId="4" warehouseId="1">
+        <amount>10</amount>
+    </remnant>
 </remnants>
